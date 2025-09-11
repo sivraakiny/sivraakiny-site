@@ -13,7 +13,7 @@ body { background: #0e2f10; color: #fff; }
   text-align: center;
 }
 
-/* Background image with slow zoom (Ken Burns effect) */
+/* Background with slow Ken Burns effect */
 .bg {
   position: absolute;
   inset: 0;
@@ -23,38 +23,52 @@ body { background: #0e2f10; color: #fff; }
   animation: kenburns 26s ease-in-out infinite alternate;
 }
 
-/* Dark gradient overlay */
+/* Soft dark overlay for readability */
 .overlay {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,0.10), transparent 60%),
-    linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.75));
+    radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,0.12), transparent 60%),
+    linear-gradient(to bottom, rgba(0,0,0,0.50), rgba(0,0,0,0.72));
   mix-blend-mode: multiply;
-  animation: floatGlow 12s ease-in-out infinite alternate;
+  animation: floatGlow 14s ease-in-out infinite alternate;
 }
 
 /* Center text */
 .content { position: relative; z-index: 1; padding: 0 20px; }
 h1 { margin: 0; font-size: clamp(32px, 6vw, 72px); font-weight: 800; }
-p  { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); }
+p  { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); color: #f3e9c2; }
 
-/* Animations */
-.fade { animation: fadeUp 1.2s ease 0.4s both; }
+/* Gold title with less white and a gentle shimmer */
 .shine {
-  background: linear-gradient(120deg, #fff 20%, #f4d061 35%, #fff 50%, #f4d061 65%, #fff 80%);
+  /* gold gradient with minimal white */
+  background: linear-gradient(
+    115deg,
+    #d6b24a 0%,
+    #f1d071 18%,
+    #c99a2c 36%,
+    #f1d071 56%,
+    #b7851f 78%,
+    #e6c35a 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  background-size: 200% 100%;
-  animation: shine 3.8s ease-in-out 0.2s both, slowPulse 6s ease-in-out infinite;
-  text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+  background-size: 180% 100%;
+  /* subtle shimmer and soft pulse */
+  animation: shine 4.5s ease-in-out 0.2s both, slowPulse 7s ease-in-out infinite;
+  text-shadow:
+    0 2px 18px rgba(0,0,0,0.35),
+    0 0 1px rgba(0,0,0,0.35);
 }
+
+/* Subtitle fade */
+.fade { animation: fadeUp 1.2s ease 0.4s both; }
 
 /* Keyframes */
 @keyframes kenburns {
   0%   { transform: scale(1) translate(0, 0); }
-  100% { transform: scale(1.065) translate(0.5%, -0.5%); }
+  100% { transform: scale(1.06) translate(0.4%, -0.4%); }
 }
 @keyframes floatGlow {
   0%   { background-position: 50% 50%, 0 0; }
@@ -65,15 +79,15 @@ p  { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes shine {
-  from { background-position: 200% 0; }
+  from { background-position: 180% 0; }
   to   { background-position: 0 0; }
 }
 @keyframes slowPulse {
-  0%, 100% { filter: drop-shadow(0 0 0 rgba(244,208,97,0)); }
-  50%      { filter: drop-shadow(0 0 16px rgba(244,208,97,0.25)); }
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(230,195,90,0)); }
+  50%      { filter: drop-shadow(0 0 14px rgba(230,195,90,0.22)); }
 }
 
-/* Accessibility: disable animations for reduced motion users */
+/* Reduce motion if the user prefers it */
 @media (prefers-reduced-motion: reduce) {
   .bg, .overlay, .shine, .fade { animation: none !important; }
 }
