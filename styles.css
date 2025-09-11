@@ -1,34 +1,90 @@
-h1 {
-  font-family: 'Cinzel', serif;
-  font-weight: 800;
-  background: linear-gradient(135deg, #FFD700, #FFB700, #FFD700);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Minimal coming soon with pure gold glow text */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; font-family: Inter, system-ui, sans-serif; }
+body { background: #0e2f10; color: #fff; }
+
+.hero {
   position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
 
-  /* stronger light glow */
-  text-shadow: 
-    0 0 12px rgba(255, 215, 0, 0.9),
-    0 0 24px rgba(255, 215, 0, 0.8),
-    0 0 48px rgba(255, 223, 0, 0.9),
-    0 0 96px rgba(255, 235, 59, 0.8);
+/* Background image */
+.bg {
+  position: absolute;
+  inset: 0;
+  background: url("assets/hero.png") center / cover no-repeat fixed;
+  transform: scale(1);
+  filter: brightness(0.95) saturate(1.05);
+  animation: kenburns 26s ease-in-out infinite alternate;
+}
 
+/* Overlay (kept for readability; adjust or remove if desired) */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,0.10), transparent 60%),
+    linear-gradient(to bottom, rgba(0,0,0,0.50), rgba(0,0,0,0.72));
+  mix-blend-mode: multiply;
+  animation: floatGlow 14s ease-in-out infinite alternate;
+}
+
+/* Content */
+.content { position: relative; z-index: 1; padding: 0 20px; }
+h1 { margin: 0; font-size: clamp(32px, 6vw, 72px); font-weight: 800; }
+p  { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); color: #f3e9c2; }
+
+/* Fix 2: Pure glowing gold text (no gradient darkening) */
+h1 {
+  color: #FFD700; /* base gold */
+  -webkit-text-fill-color: #FFD700;
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.90),
+    0 0 25px rgba(255, 220, 80, 0.90),
+    0 0 50px rgba(255, 230, 120, 0.85),
+    0 0 100px rgba(255, 240, 160, 0.80);
   animation: radiantGlow 3s ease-in-out infinite alternate;
 }
 
+/* Subtitle entrance */
+.fade { animation: fadeUp 1.2s ease 0.4s both; }
+
+/* Keyframes */
+@keyframes kenburns {
+  0%   { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.06) translate(0.4%, -0.4%); }
+}
+@keyframes floatGlow {
+  0%   { background-position: 50% 50%, 0 0; }
+  100% { background-position: 48% 46%, 0 0; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 @keyframes radiantGlow {
   from {
     text-shadow:
-      0 0 12px rgba(255, 215, 0, 0.9),
-      0 0 24px rgba(255, 215, 0, 0.8),
-      0 0 48px rgba(255, 223, 0, 0.9),
-      0 0 96px rgba(255, 235, 59, 0.8);
+      0 0 10px rgba(255, 215, 0, 0.90),
+      0 0 25px rgba(255, 220, 80, 0.90),
+      0 0 50px rgba(255, 230, 120, 0.85),
+      0 0 100px rgba(255, 240, 160, 0.80);
   }
   to {
     text-shadow:
-      0 0 20px rgba(255, 230, 120, 1),
-      0 0 40px rgba(255, 220, 80, 0.95),
-      0 0 80px rgba(255, 220, 60, 0.9),
-      0 0 160px rgba(255, 235, 150, 0.85);
+      0 0 16px rgba(255, 230, 120, 1.0),
+      0 0 36px rgba(255, 225, 90, 0.95),
+      0 0 72px rgba(255, 220, 70, 0.90),
+      0 0 140px rgba(255, 235, 160, 0.85);
   }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .bg, .overlay, .fade { animation: none !important; }
 }
