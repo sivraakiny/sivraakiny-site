@@ -1,93 +1,31 @@
-/* Minimal animated coming soon page */
-* { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; font-family: Inter, system-ui, sans-serif; }
-body { background: #0e2f10; color: #fff; }
-
-.hero {
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  text-align: center;
-}
-
-/* Background with slow Ken Burns effect */
-.bg {
-  position: absolute;
-  inset: 0;
-  background: url("assets/hero.png") center / cover no-repeat fixed;
-  transform: scale(1);
-  filter: brightness(0.9) saturate(1.05);
-  animation: kenburns 26s ease-in-out infinite alternate;
-}
-
-/* Soft dark overlay for readability */
-.overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,0.12), transparent 60%),
-    linear-gradient(to bottom, rgba(0,0,0,0.50), rgba(0,0,0,0.72));
-  mix-blend-mode: multiply;
-  animation: floatGlow 14s ease-in-out infinite alternate;
-}
-
-/* Center text */
-.content { position: relative; z-index: 1; padding: 0 20px; }
-h1 { margin: 0; font-size: clamp(32px, 6vw, 72px); font-weight: 800; }
-p  { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); color: #f3e9c2; }
-
-/* Gold title with less white and a gentle shimmer */
-.shine {
-  /* gold gradient with minimal white */
-  background: linear-gradient(
-    115deg,
-    #d6b24a 0%,
-    #f1d071 18%,
-    #c99a2c 36%,
-    #f1d071 56%,
-    #b7851f 78%,
-    #e6c35a 100%
-  );
+h1, h2 {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  background: linear-gradient(135deg, #FFD700, #B8860B, #FFD700);
   -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  background-size: 180% 100%;
-  /* subtle shimmer and soft pulse */
-  animation: shine 4.5s ease-in-out 0.2s both, slowPulse 7s ease-in-out infinite;
-  text-shadow:
-    0 2px 18px rgba(0,0,0,0.35),
-    0 0 1px rgba(0,0,0,0.35);
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  text-shadow: 
+    0 0 5px rgba(255, 215, 0, 0.7),
+    0 0 10px rgba(255, 215, 0, 0.6),
+    0 0 20px rgba(184, 134, 11, 0.8),
+    0 0 40px rgba(255, 215, 0, 0.6);
+  animation: glowPulse 2.5s ease-in-out infinite alternate;
 }
 
-/* Subtitle fade */
-.fade { animation: fadeUp 1.2s ease 0.4s both; }
-
-/* Keyframes */
-@keyframes kenburns {
-  0%   { transform: scale(1) translate(0, 0); }
-  100% { transform: scale(1.06) translate(0.4%, -0.4%); }
-}
-@keyframes floatGlow {
-  0%   { background-position: 50% 50%, 0 0; }
-  100% { background-position: 48% 46%, 0 0; }
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes shine {
-  from { background-position: 180% 0; }
-  to   { background-position: 0 0; }
-}
-@keyframes slowPulse {
-  0%, 100% { filter: drop-shadow(0 0 0 rgba(230,195,90,0)); }
-  50%      { filter: drop-shadow(0 0 14px rgba(230,195,90,0.22)); }
-}
-
-/* Reduce motion if the user prefers it */
-@media (prefers-reduced-motion: reduce) {
-  .bg, .overlay, .shine, .fade { animation: none !important; }
+@keyframes glowPulse {
+  from {
+    text-shadow: 
+      0 0 5px rgba(255, 215, 0, 0.7),
+      0 0 10px rgba(255, 215, 0, 0.6),
+      0 0 20px rgba(184, 134, 11, 0.8),
+      0 0 40px rgba(255, 215, 0, 0.6);
+  }
+  to {
+    text-shadow: 
+      0 0 10px rgba(255, 215, 0, 1),
+      0 0 20px rgba(255, 215, 0, 0.9),
+      0 0 30px rgba(255, 223, 0, 1),
+      0 0 60px rgba(255, 223, 0, 0.9);
+  }
 }
