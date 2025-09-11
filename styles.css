@@ -39,16 +39,60 @@ body { background: #0e2f10; color: #fff; }
 h1 { margin: 0; font-size: clamp(32px, 6vw, 72px); font-weight: 800; }
 p  { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); color: #f3e9c2; }
 
-/* Fix 2: Pure glowing gold text (no gradient darkening) */
+
+/* Replace your existing h1 rules with this block */
 h1 {
-  color: #FFD700; /* base gold */
-  -webkit-text-fill-color: #FFD700;
+  position: relative;
+  margin: 0;
+  font-size: clamp(32px, 6vw, 72px);
+  font-weight: 800;
+
+  /* metallic gold with minimal white */
+  background: linear-gradient(
+    120deg,
+    #c89a1e 0%,
+    #e6c35a 28%,
+    #b78117 56%,
+    #f0d36f 76%,
+    #a86f0a 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  /* subtle sharp specular + tiny outer glow */
   text-shadow:
-    0 0 10px rgba(255, 215, 0, 0.90),
-    0 0 25px rgba(255, 220, 80, 0.90),
-    0 0 50px rgba(255, 230, 120, 0.85),
-    0 0 100px rgba(255, 240, 160, 0.80);
-  animation: radiantGlow 3s ease-in-out infinite alternate;
+    0 1px 0 rgba(0,0,0,0.25),
+    0 0 10px rgba(230,195,90,0.35);
+  animation: titleShimmer 5s ease-in-out infinite;
+}
+
+/* Soft backlight halo behind the letters */
+h1::before {
+  content: "Sivraakiny Industries";     /* must match the heading text */
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  /* wide, soft radial glow */
+  background: radial-gradient(ellipse at 50% 55%,
+     rgba(255, 220, 90, 0.55) 0%,
+     rgba(255, 200, 60, 0.22) 35%,
+     rgba(255, 200, 60, 0.08) 60%,
+     transparent 70%);
+  filter: blur(18px);
+  transform: scale(1.02);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* Keep the subtitle simple so it doesn't fight the glow */
+p { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); color: #f6e9bd; }
+
+/* Gentle shimmer across the metallic gradient */
+@keyframes titleShimmer {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 100% 0%; }
+  100% { background-position: 0% 0%; }
 }
 
 /* Subtitle entrance */
