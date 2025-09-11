@@ -94,6 +94,31 @@ p { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); color: #f6e9bd; }
   50%  { background-position: 100% 0%; }
   100% { background-position: 0% 0%; }
 }
+/* Add a moving light blob effect */
+h1::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -30%;
+  width: 30%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 200, 0.9) 0%,
+    rgba(255, 220, 120, 0.6) 30%,
+    rgba(255, 200, 60, 0.2) 60%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: lightSweep 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes lightSweep {
+  0%   { left: -30%; }
+  50%  { left: 100%; }
+  100% { left: 120%; }
+}
 
 /* Subtitle entrance */
 .fade { animation: fadeUp 1.2s ease 0.4s both; }
