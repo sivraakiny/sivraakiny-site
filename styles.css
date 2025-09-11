@@ -1,0 +1,79 @@
+/* Minimal animated coming soon page */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; font-family: Inter, system-ui, sans-serif; }
+body { background: #0e2f10; color: #fff; }
+
+.hero {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+/* Background image with slow zoom (Ken Burns effect) */
+.bg {
+  position: absolute;
+  inset: 0;
+  background: url("assets/hero.png") center / cover no-repeat fixed;
+  transform: scale(1);
+  filter: brightness(0.9) saturate(1.05);
+  animation: kenburns 26s ease-in-out infinite alternate;
+}
+
+/* Dark gradient overlay */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,0.10), transparent 60%),
+    linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.75));
+  mix-blend-mode: multiply;
+  animation: floatGlow 12s ease-in-out infinite alternate;
+}
+
+/* Center text */
+.content { position: relative; z-index: 1; padding: 0 20px; }
+h1 { margin: 0; font-size: clamp(32px, 6vw, 72px); font-weight: 800; }
+p  { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); }
+
+/* Animations */
+.fade { animation: fadeUp 1.2s ease 0.4s both; }
+.shine {
+  background: linear-gradient(120deg, #fff 20%, #f4d061 35%, #fff 50%, #f4d061 65%, #fff 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% 100%;
+  animation: shine 3.8s ease-in-out 0.2s both, slowPulse 6s ease-in-out infinite;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+}
+
+/* Keyframes */
+@keyframes kenburns {
+  0%   { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.065) translate(0.5%, -0.5%); }
+}
+@keyframes floatGlow {
+  0%   { background-position: 50% 50%, 0 0; }
+  100% { background-position: 48% 46%, 0 0; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes shine {
+  from { background-position: 200% 0; }
+  to   { background-position: 0 0; }
+}
+@keyframes slowPulse {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(244,208,97,0)); }
+  50%      { filter: drop-shadow(0 0 16px rgba(244,208,97,0.25)); }
+}
+
+/* Accessibility: disable animations for reduced motion users */
+@media (prefers-reduced-motion: reduce) {
+  .bg, .overlay, .shine, .fade { animation: none !important; }
+}
