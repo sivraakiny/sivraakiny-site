@@ -68,8 +68,8 @@ h1::after {
   position: absolute;
   top: 35%;           /* vertical placement on letters */
   left: -15%;
-  width: 3%;
-  height: 10%;
+  width: 6%;
+  height: 20%;
   background: radial-gradient(
     circle at center,
     rgba(255, 255, 200, 0.95) 0%,
