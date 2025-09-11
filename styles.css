@@ -66,7 +66,7 @@ h1 {
 h1::after {
   content: "";
   position: absolute;
-  top: 35%;           /* vertical placement on letters */
+  top: 50%;           /* vertical placement on letters */
   left: -15%;
   width: 6%;
   height: 20%;
@@ -78,7 +78,7 @@ h1::after {
   );
   border-radius: 50%;
   filter: blur(2px);
-  animation: bulletSweep 1s linear infinite;
+  animation: bulletSweep 1.5s linear infinite;
   pointer-events: none;
 }
 
