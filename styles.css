@@ -1,4 +1,4 @@
-/* Minimal coming soon with pure gold glow text */
+/* Coming soon site with metallic gold text + light flare */
 * { box-sizing: border-box; }
 html, body { height: 100%; margin: 0; font-family: Inter, system-ui, sans-serif; }
 body { background: #0e2f10; color: #fff; }
@@ -13,7 +13,7 @@ body { background: #0e2f10; color: #fff; }
   text-align: center;
 }
 
-/* Background image */
+/* Background image with slow zoom */
 .bg {
   position: absolute;
   inset: 0;
@@ -23,101 +23,63 @@ body { background: #0e2f10; color: #fff; }
   animation: kenburns 26s ease-in-out infinite alternate;
 }
 
-/* Overlay (kept for readability; adjust or remove if desired) */
+/* Optional overlay (can be removed if you want full brightness) */
 .overlay {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,0.10), transparent 60%),
-    linear-gradient(to bottom, rgba(0,0,0,0.50), rgba(0,0,0,0.72));
+    radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,0.08), transparent 60%),
+    linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.65));
   mix-blend-mode: multiply;
-  animation: floatGlow 14s ease-in-out infinite alternate;
 }
 
-/* Content */
+/* Content block */
 .content { position: relative; z-index: 1; padding: 0 20px; }
-h1 { margin: 0; font-size: clamp(32px, 6vw, 72px); font-weight: 800; }
-p  { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); color: #f3e9c2; }
+p  { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); color: #f6e9bd; }
 
-
-/* Replace your existing h1 rules with this block */
+/* Metallic gold title */
 h1 {
   position: relative;
   margin: 0;
   font-size: clamp(32px, 6vw, 72px);
   font-weight: 800;
 
-  /* metallic gold with minimal white */
+  /* metallic gradient */
   background: linear-gradient(
     120deg,
-    #c89a1e 0%,
-    #e6c35a 28%,
-    #b78117 56%,
-    #f0d36f 76%,
-    #a86f0a 100%
+    #a97411 0%,
+    #d6b24a 25%,
+    #f6e27a 50%,
+    #d4af37 75%,
+    #a97411 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 
-  /* subtle sharp specular + tiny outer glow */
   text-shadow:
-    0 1px 0 rgba(0,0,0,0.25),
-    0 0 10px rgba(230,195,90,0.35);
-  animation: titleShimmer 5s ease-in-out infinite;
+    0 0 10px rgba(212,175,55,0.6),
+    0 0 20px rgba(166,124,0,0.4);
 }
 
-/* Soft backlight halo behind the letters */
-h1::before {
-  content: "Sivraakiny Industries";     /* must match the heading text */
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  /* wide, soft radial glow */
-  background: radial-gradient(ellipse at 50% 55%,
-     rgba(255, 220, 90, 0.55) 0%,
-     rgba(255, 200, 60, 0.22) 35%,
-     rgba(255, 200, 60, 0.08) 60%,
-     transparent 70%);
-  filter: blur(18px);
-  transform: scale(1.02);
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-/* Keep the subtitle simple so it doesn't fight the glow */
-p { margin: 10px 0 0; font-size: clamp(18px, 3vw, 28px); color: #f6e9bd; }
-
-/* Gentle shimmer across the metallic gradient */
-@keyframes titleShimmer {
-  0%   { background-position: 0% 0%; }
-  50%  { background-position: 100% 0%; }
-  100% { background-position: 0% 0%; }
-}
-/* Add a moving light blob effect */
+/* Sweeping light flare */
 h1::after {
   content: "";
   position: absolute;
   top: 0;
-  left: -30%;
-  width: 30%;
+  left: -40%;
+  width: 40%;
   height: 100%;
-  background: radial-gradient(
-    circle at center,
-    rgba(255, 255, 200, 0.9) 0%,
-    rgba(255, 220, 120, 0.6) 30%,
-    rgba(255, 200, 60, 0.2) 60%,
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 200, 0.6) 30%,
+    rgba(255, 220, 120, 0.25) 60%,
     transparent 100%
   );
   transform: skewX(-20deg);
-  animation: lightSweep 3s linear infinite;
+  animation: lightSweep 2.8s ease-in-out infinite;
   pointer-events: none;
-}
-
-@keyframes lightSweep {
-  0%   { left: -30%; }
-  50%  { left: 100%; }
-  100% { left: 120%; }
 }
 
 /* Subtitle entrance */
@@ -128,32 +90,17 @@ h1::after {
   0%   { transform: scale(1) translate(0, 0); }
   100% { transform: scale(1.06) translate(0.4%, -0.4%); }
 }
-@keyframes floatGlow {
-  0%   { background-position: 50% 50%, 0 0; }
-  100% { background-position: 48% 46%, 0 0; }
-}
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes radiantGlow {
-  from {
-    text-shadow:
-      0 0 10px rgba(255, 215, 0, 0.90),
-      0 0 25px rgba(255, 220, 80, 0.90),
-      0 0 50px rgba(255, 230, 120, 0.85),
-      0 0 100px rgba(255, 240, 160, 0.80);
-  }
-  to {
-    text-shadow:
-      0 0 16px rgba(255, 230, 120, 1.0),
-      0 0 36px rgba(255, 225, 90, 0.95),
-      0 0 72px rgba(255, 220, 70, 0.90),
-      0 0 140px rgba(255, 235, 160, 0.85);
-  }
+@keyframes lightSweep {
+  0%   { left: -40%; }
+  50%  { left: 100%; }
+  100% { left: 120%; }
 }
 
-/* Reduce motion */
+/* Accessibility: disable animations if user prefers reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .bg, .overlay, .fade { animation: none !important; }
+  .bg, .overlay, h1::after, .fade { animation: none !important; }
 }
