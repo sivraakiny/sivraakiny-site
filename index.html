@@ -1,443 +1,167 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#183b22">
-  <meta name="description" content="Sivraakiny Industries — Indian defence manufacturing.">
-  <title>Sivraakiny Industries</title>
-  <style>
-    * { box-sizing: border-box; }
-    :root {
-      --green: #183b22;
-      --green-dark: #102a18;
-      --black-green: #060b08;
-      --gold: #d0aa47;
-      --gold-light: #f0d783;
-      --cream: #eee9dc;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#214b28">
+<title>Sivraakiny Industries</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100%;background:#07100a}
+body{overflow:hidden;color:#eee9dc;font-family:Helvetica,Arial,sans-serif}
 
-    html, body {
-      margin: 0;
-      width: 100%;
-      min-height: 100%;
-      background: var(--black-green);
-    }
+.info{
+  position:fixed;inset:0;
+  display:grid;place-items:center;
+  padding:55px 24px;
+  background:radial-gradient(circle at 50% 12%,rgba(85,72,28,.10),transparent 38%),#07100a;
+}
+.info-inner{width:min(760px,100%);text-align:center;opacity:0;transform:translateY(12px)}
+.info.show .info-inner{animation:showInfo .8s ease forwards}
+.info p{font-family:Georgia,"Times New Roman",serif;margin:0 auto 23px}
+.lead{font-size:clamp(1.22rem,2.1vw,1.58rem);line-height:1.62;color:#f1eee5}
+.copy{font-size:clamp(.98rem,1.45vw,1.10rem);line-height:1.8;color:rgba(239,235,225,.68)}
+.rule{width:42px;height:1px;margin:0 auto 34px;background:linear-gradient(90deg,transparent,#c8a54b,transparent)}
+.contact{margin-top:44px;padding-top:26px;border-top:1px solid rgba(200,165,75,.18)}
+.contact span{display:block;margin-bottom:10px;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(235,224,193,.45)}
+.contact a{font-family:Georgia,"Times New Roman",serif;color:#d6b65b;text-decoration:none;font-size:1.18rem}
 
-    body {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      color: var(--cream);
-      overflow: hidden;
-    }
+/* Opening page */
+.intro{position:fixed;inset:0;z-index:10;display:grid;place-items:center;overflow:hidden}
+.half{
+  position:absolute;left:0;width:100%;height:50.05%;
+  background:radial-gradient(circle at 50% 55%,rgba(95,126,82,.16),transparent 42%),linear-gradient(145deg,#28572f,#1c4726 58%,#15391e);
+  z-index:1;
+}
+.half.top{top:0}
+.half.bottom{bottom:0}
 
-    /* Information page is already underneath the opening sequence. */
-    .information {
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      padding: 64px 24px;
-      background:
-        radial-gradient(circle at 50% 5%, rgba(120, 91, 30, .10), transparent 35%),
-        linear-gradient(145deg, #0c1510 0%, #050806 100%);
-    }
+.brand{
+  position:relative;z-index:4;
+  width:min(82vw,650px);
+  text-align:center;
+  opacity:0;
+  transform:scale(.985);
+  animation:brandIn .75s ease .15s forwards;
+}
 
-    .info-inner {
-      width: min(790px, 100%);
-      text-align: center;
-      opacity: 0;
-      transform: translateY(12px);
-      animation: infoReveal .9s ease 2.75s forwards;
-    }
+/* Exact supplied logo, but contained — never cropped. */
+.logo{
+  display:block;
+  width:min(43vw,360px);
+  max-height:52vh;
+  object-fit:contain;
+  margin:0 auto 22px;
+  mix-blend-mode:multiply;
+  filter:brightness(1.08) contrast(1.04) drop-shadow(0 0 18px rgba(214,172,66,.12));
+}
 
-    .info-emblem {
-      width: 82px;
-      height: 82px;
-      object-fit: contain;
-      opacity: .52;
-      filter: saturate(.82) brightness(.9);
-    }
+/* English name: use a clean metallic treatment at proper readable size.
+   The uploaded vector remains included in assets, but its artboard has huge whitespace. */
+.word-stage{position:relative;display:inline-block}
+.word{
+  margin:0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(2.5rem,6vw,5.6rem);
+  line-height:.95;
+  font-weight:500;
+  letter-spacing:-.04em;
+  background:linear-gradient(180deg,#785217 0%,#ad7c27 19%,#dfbb58 37%,#f0d47b 46%,#b17d27 60%,#d0a84a 76%,#684512 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 1px 0 rgba(0,0,0,.45)) drop-shadow(0 0 10px rgba(216,172,57,.2));
+  white-space:nowrap;
+}
 
-    .rule {
-      width: 46px;
-      height: 1px;
-      margin: 25px auto 35px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
+/* Tiny bullet, travelling directly through the English name */
+.bullet{
+  position:absolute;z-index:7;
+  top:51%;left:-8%;
+  width:16px;height:6px;
+  transform:translateY(-50%);
+  opacity:0;
+}
+.bullet:before{
+  content:"";position:absolute;inset:0;
+  clip-path:polygon(0 17%,70% 17%,100% 50%,70% 83%,0 83%);
+  background:linear-gradient(90deg,#785017,#bd892b 40%,#efd06e 70%,#95641c);
+  filter:drop-shadow(0 0 4px rgba(255,224,120,.8));
+}
+.bullet:after{
+  content:"";position:absolute;right:13px;top:50%;
+  width:12px;height:1px;transform:translateY(-50%);
+  background:linear-gradient(90deg,transparent,rgba(255,234,154,.9));
+}
+.intro.fire .bullet{animation:bullet .42s cubic-bezier(.13,.7,.22,.98) forwards}
+.intro.fire .word{animation:hit .38s ease}
 
-    .information p {
-      font-family: Georgia, "Times New Roman", serif;
-      margin: 0 auto 24px;
-    }
+.seam{
+  position:absolute;z-index:6;left:50%;top:50%;
+  width:0;height:1px;transform:translate(-50%,-50%);
+  opacity:0;
+  background:linear-gradient(90deg,transparent,rgba(224,178,64,.45),#fff0b2,rgba(224,178,64,.45),transparent);
+  box-shadow:0 0 7px rgba(255,226,128,.75),0 0 17px rgba(215,165,48,.3);
+}
+.intro.cut .seam{animation:seam .3s ease-out forwards}
 
-    .lead {
-      color: #f2efe6;
-      font-size: clamp(1.28rem, 2.35vw, 1.72rem);
-      line-height: 1.62;
-    }
+.intro.open .brand{animation:fadeBrand .22s ease forwards}
+.intro.open .top{animation:openTop .95s cubic-bezier(.77,0,.18,1) forwards}
+.intro.open .bottom{animation:openBottom .95s cubic-bezier(.77,0,.18,1) forwards}
 
-    .copy {
-      color: rgba(239, 235, 225, .68);
-      font-size: clamp(1rem, 1.6vw, 1.17rem);
-      line-height: 1.85;
-    }
+@keyframes brandIn{to{opacity:1;transform:none}}
+@keyframes bullet{0%{left:-8%;opacity:0}7%{opacity:1}92%{opacity:1}100%{left:108%;opacity:0}}
+@keyframes hit{50%{filter:brightness(1.25) drop-shadow(0 0 13px rgba(255,222,112,.55))}}
+@keyframes seam{0%{width:0;opacity:0}15%{opacity:1}100%{width:110vw;opacity:1}}
+@keyframes fadeBrand{to{opacity:0}}
+@keyframes openTop{to{transform:translateY(-103%)}}
+@keyframes openBottom{to{transform:translateY(103%)}}
+@keyframes showInfo{to{opacity:1;transform:none}}
 
-    .contact {
-      margin-top: 48px;
-      padding-top: 28px;
-      border-top: 1px solid rgba(208, 170, 71, .18);
-    }
-
-    .contact span {
-      display: block;
-      margin-bottom: 11px;
-      color: rgba(238, 226, 195, .45);
-      font-size: .68rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-
-    .contact a {
-      color: #d7b85e;
-      text-decoration: none;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.06rem, 2vw, 1.24rem);
-      transition: color .2s ease, text-shadow .2s ease;
-    }
-
-    .contact a:hover {
-      color: var(--gold-light);
-      text-shadow: 0 0 15px rgba(223, 184, 83, .25);
-    }
-
-    /* -------- OPENING SEQUENCE -------- */
-    .intro {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      display: grid;
-      place-items: center;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    /* Two green halves are the actual "doors" that split apart. */
-    .panel {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 50.05%;
-      z-index: 1;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(89, 121, 75, .16), transparent 42%),
-        linear-gradient(145deg, #1d4628 0%, #16391f 58%, #102b18 100%);
-    }
-
-    .panel::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: .045;
-      background-image:
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,.8) 0 1px, transparent 1.2px),
-        radial-gradient(circle at 70% 60%, rgba(255,255,255,.5) 0 1px, transparent 1.2px);
-      background-size: 90px 90px, 120px 120px;
-    }
-
-    .panel.top {
-      top: 0;
-      animation: panelTop 1.05s cubic-bezier(.77,0,.18,1) 2.12s forwards;
-    }
-
-    .panel.bottom {
-      bottom: 0;
-      animation: panelBottom 1.05s cubic-bezier(.77,0,.18,1) 2.12s forwards;
-    }
-
-    .brand {
-      position: relative;
-      z-index: 5;
-      width: min(88vw, 820px);
-      text-align: center;
-      opacity: 0;
-      transform: translateY(10px) scale(.99);
-      animation:
-        brandIn .85s cubic-bezier(.2,.8,.2,1) .15s forwards,
-        brandOut .42s ease 2.12s forwards;
-    }
-
-    .emblem {
-      display: block;
-      width: min(34vw, 300px);
-      max-width: 300px;
-      margin: 0 auto 26px;
-      filter: drop-shadow(0 0 18px rgba(213, 171, 64, .14));
-    }
-
-    .wordmark-stage {
-      position: relative;
-      width: min(84vw, 760px);
-      margin: 0 auto;
-      height: clamp(62px, 9vw, 105px);
-      overflow: visible;
-    }
-
-    /* Exact supplied English lettering */
-    .wordmark {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center;
-      filter:
-        drop-shadow(0 1px 0 rgba(0,0,0,.35))
-        drop-shadow(0 0 11px rgba(210,165,53,.18));
-    }
-
-    /* Tiny actual projectile silhouette */
-    .bullet {
-      position: absolute;
-      z-index: 9;
-      top: 50%;
-      left: -8%;
-      width: 17px;
-      height: 6px;
-      opacity: 0;
-      transform: translateY(-50%);
-      animation: bulletPass .44s cubic-bezier(.13,.68,.22,.98) 1.38s forwards;
-      filter: drop-shadow(0 0 4px rgba(255, 224, 121, .85));
-    }
-
-    .bullet::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      clip-path: polygon(0 17%, 70% 17%, 100% 50%, 70% 83%, 0 83%);
-      background: linear-gradient(
-        90deg,
-        #7d5317 0%,
-        #c18d2b 38%,
-        #efd06f 69%,
-        #9e6c20 100%
-      );
-      box-shadow: inset 0 1px 1px rgba(255, 241, 176, .48);
-    }
-
-    .bullet::after {
-      content: "";
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      width: 14px;
-      height: 1.5px;
-      transform: translateY(-50%);
-      background: linear-gradient(90deg, transparent, rgba(231,184,66,.25), rgba(255,238,162,.9));
-      filter: blur(.35px);
-    }
-
-    /* A tiny flash where the bullet crosses. */
-    .flash {
-      position: absolute;
-      z-index: 8;
-      top: 50%;
-      left: 50%;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%) scale(.1);
-      opacity: 0;
-      background: #fff4c6;
-      box-shadow:
-        0 0 6px #fff0b2,
-        0 0 18px rgba(242,199,89,.85),
-        0 0 35px rgba(211,159,43,.45);
-      animation: flash .22s ease 1.55s forwards;
-    }
-
-    /* Cut line grows after bullet passes, then becomes the split seam. */
-    .cut-line {
-      position: fixed;
-      z-index: 8;
-      left: 50%;
-      top: 50%;
-      width: 0;
-      height: 1px;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(212,164,53,.45) 12%,
-        rgba(255,244,190,.98) 50%,
-        rgba(212,164,53,.45) 88%,
-        transparent
-      );
-      box-shadow:
-        0 0 7px rgba(255,226,130,.78),
-        0 0 18px rgba(214,165,48,.34);
-      animation:
-        cutGrow .28s ease-out 1.72s forwards,
-        cutFade .3s ease 2.12s forwards;
-    }
-
-    /* Temporary glow on real artwork when hit */
-    .wordmark-stage {
-      animation: wordmarkHit .35s ease 1.48s;
-    }
-
-    @keyframes brandIn {
-      to { opacity: 1; transform: none; }
-    }
-
-    @keyframes brandOut {
-      to { opacity: 0; transform: scale(.99); }
-    }
-
-    @keyframes bulletPass {
-      0%   { left: -8%; opacity: 0; }
-      7%   { opacity: 1; }
-      92%  { opacity: 1; }
-      100% { left: 108%; opacity: 0; }
-    }
-
-    @keyframes flash {
-      0%   { opacity: 0; transform: translate(-50%,-50%) scale(.1); }
-      45%  { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
-      100% { opacity: 0; transform: translate(-50%,-50%) scale(1.6); }
-    }
-
-    @keyframes wordmarkHit {
-      0%,100% { filter: none; }
-      48% {
-        filter:
-          brightness(1.22)
-          drop-shadow(0 0 9px rgba(255,222,115,.45));
-      }
-    }
-
-    @keyframes cutGrow {
-      0% { width: 0; opacity: 0; }
-      16% { opacity: 1; }
-      100% { width: 110vw; opacity: 1; }
-    }
-
-    @keyframes cutFade {
-      to { opacity: .38; }
-    }
-
-    @keyframes panelTop {
-      0% {
-        transform: translateY(0);
-        box-shadow: 0 2px 0 rgba(255,232,150,.55);
-      }
-      100% {
-        transform: translateY(-103%);
-        box-shadow: 0 8px 35px rgba(220,171,49,.12);
-      }
-    }
-
-    @keyframes panelBottom {
-      0% {
-        transform: translateY(0);
-        box-shadow: 0 -2px 0 rgba(255,232,150,.55);
-      }
-      100% {
-        transform: translateY(103%);
-        box-shadow: 0 -8px 35px rgba(220,171,49,.12);
-      }
-    }
-
-    @keyframes infoReveal {
-      to { opacity: 1; transform: none; }
-    }
-
-    @media (max-width: 600px) {
-      .emblem {
-        width: min(52vw, 245px);
-        margin-bottom: 20px;
-      }
-
-      .wordmark-stage {
-        width: 92vw;
-        height: 72px;
-      }
-
-      .bullet {
-        width: 14px;
-        height: 5px;
-      }
-
-      .information {
-        padding: 52px 22px;
-      }
-
-      .info-emblem {
-        width: 70px;
-        height: 70px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      body { overflow: auto; }
-      .intro { display: none; }
-      .info-inner { opacity: 1; transform: none; animation: none; }
-    }
-  </style>
+@media(max-width:600px){
+  .brand{width:92vw}
+  .logo{width:min(66vw,310px);margin-bottom:18px}
+  .word{font-size:clamp(2.15rem,11vw,3.8rem)}
+  .info{padding:45px 22px}
+}
+@media(prefers-reduced-motion:reduce){
+  body{overflow:auto}.intro{display:none}.info-inner{opacity:1;transform:none}
+}
+</style>
 </head>
-
 <body>
-  <section class="information">
-    <div class="info-inner">
-      <img class="info-emblem" src="assets/emblem.png" alt="">
-      <div class="rule"></div>
-
-      <p class="lead">
-        Sivraakiny Industries is an Indian defence manufacturing company committed to building
-        advanced indigenous capabilities in support of India's defence requirements.
-      </p>
-
-      <p class="copy">
-        Given the sensitive nature of defence manufacturing, information regarding our manufacturing
-        capabilities and operations is intentionally limited on this website, in keeping with applicable
-        Government of India security and confidentiality requirements.
-      </p>
-
-      <div class="contact">
-        <span>Business &amp; collaboration enquiries</span>
-        <a href="mailto:contact@sivraakiny.com">contact@sivraakiny.com</a>
-      </div>
+<section class="info" id="info">
+  <div class="info-inner">
+    <div class="rule"></div>
+    <p class="lead">Sivraakiny Industries is an Indian defence manufacturing company committed to building advanced indigenous capabilities in support of India's defence requirements.</p>
+    <p class="copy">Given the sensitive nature of defence manufacturing, information regarding our manufacturing capabilities and operations is intentionally limited on this website, in keeping with applicable Government of India security and confidentiality requirements.</p>
+    <div class="contact">
+      <span>Business &amp; collaboration enquiries</span>
+      <a href="mailto:contact@sivraakiny.com">contact@sivraakiny.com</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="intro" id="intro" aria-label="Sivraakiny Industries">
-    <div class="panel top"></div>
-    <div class="panel bottom"></div>
-
-    <div class="brand">
-      <img class="emblem" src="assets/emblem.png" alt="Sivraakiny emblem">
-
-      <div class="wordmark-stage">
-        <img
-          class="wordmark"
-          src="assets/sivraakiny-wordmark.svg"
-          alt="Sivraakiny Industries">
-        <span class="bullet" aria-hidden="true"></span>
-        <span class="flash" aria-hidden="true"></span>
-      </div>
+<section class="intro" id="intro">
+  <div class="half top"></div>
+  <div class="half bottom"></div>
+  <div class="brand">
+    <img class="logo" src="assets/gold-logo.png" alt="Sivraakiny">
+    <div class="word-stage">
+      <h1 class="word">Sivraakiny Industries</h1>
+      <span class="bullet"></span>
     </div>
+  </div>
+  <div class="seam"></div>
+</section>
 
-    <div class="cut-line" aria-hidden="true"></div>
-  </section>
-
-  <script>
-    // CSS runs the full sequence automatically.
-    // Hide the fixed intro after the doors finish opening, so the information page behaves normally.
-    window.addEventListener("load", () => {
-      window.setTimeout(() => {
-        const intro = document.getElementById("intro");
-        if (intro) intro.remove();
-        document.body.style.overflow = "auto";
-      }, 3350);
-    });
-  </script>
+<script>
+window.addEventListener("load",()=>{
+  const intro=document.getElementById("intro");
+  const info=document.getElementById("info");
+  setTimeout(()=>intro.classList.add("fire"),1200);
+  setTimeout(()=>intro.classList.add("cut"),1620);
+  setTimeout(()=>{intro.classList.add("open");info.classList.add("show")},1880);
+  setTimeout(()=>{intro.remove();document.body.style.overflow="auto"},3000);
+});
+</script>
 </body>
 </html>
