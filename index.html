@@ -20,19 +20,99 @@
   --gold:#c8a64f;
   --gold-soft:#ddc078;
   --text:#f1eee6;
-  --muted:rgba(241,238,230,.63);
 }
-html,body{
-  margin:0;
-  width:100%;
-  min-height:100%;
-  background:var(--ink);
-}
+html,body{margin:0;width:100%;min-height:100%;background:var(--ink)}
 body{
   font-family:"Manrope",system-ui,sans-serif;
   color:var(--text);
   overflow:hidden;
-  -webkit-font-smoothing:antialiased;
+  -webkit-font-smoothing:antialiased
+}
+
+/* ---------------- INFO PAGE ---------------- */
+.info{
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  padding:72px 24px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(93,76,30,.09),transparent 35%),
+    linear-gradient(145deg,#0b140e 0%,#050806 100%);
+}
+.info-inner{
+  width:min(760px,100%);
+  text-align:center;
+  opacity:0;
+  transform:translateY(14px);
+}
+.info.show .info-inner{
+  animation:infoIn .9s cubic-bezier(.22,.61,.36,1) .08s forwards;
+}
+.info-logo{
+  display:block;
+  width:64px;
+  height:64px;
+  object-fit:contain;
+  margin:0 auto 22px;
+  opacity:.74;
+  filter:drop-shadow(0 0 10px rgba(211,170,64,.10));
+}
+.eyebrow{
+  margin:0 0 23px;
+  font-size:.63rem;
+  font-weight:400;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(217,190,119,.50);
+}
+.rule{
+  width:42px;
+  height:1px;
+  margin:0 auto 36px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.lead,.copy{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;
+}
+.lead{
+  margin:0 auto 24px;
+  max-width:720px;
+  font-size:clamp(1.55rem,2.8vw,2.15rem);
+  line-height:1.48;
+  letter-spacing:.005em;
+  color:#f2efe7;
+}
+.copy{
+  margin:0 auto 30px;
+  max-width:700px;
+  font-size:clamp(1.08rem,1.8vw,1.3rem);
+  line-height:1.72;
+  color:rgba(239,235,225,.66);
+}
+.contact{
+  margin-top:48px;
+  padding-top:28px;
+  border-top:1px solid rgba(201,167,77,.15);
+}
+.contact-label{
+  display:block;
+  margin-bottom:10px;
+  font-size:.63rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:rgba(235,223,192,.4);
+}
+.contact a{
+  color:#d6b65d;
+  text-decoration:none;
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(1.2rem,2.1vw,1.42rem);
+  transition:color .2s ease,text-shadow .2s ease;
+}
+.contact a:hover{
+  color:#ecd27e;
+  text-shadow:0 0 14px rgba(222,184,84,.18);
 }
 
 /* ---------------- INTRO ---------------- */
@@ -52,7 +132,6 @@ body{
     transform .9s cubic-bezier(.22,.61,.36,1),
     filter .9s cubic-bezier(.22,.61,.36,1);
 }
-
 .intro::before{
   content:"";
   position:absolute;
@@ -63,22 +142,12 @@ body{
   animation:breathe 8s ease-in-out infinite alternate;
   pointer-events:none;
 }
-
-.intro::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:linear-gradient(to bottom,rgba(255,255,255,.018),transparent 20%,transparent 80%,rgba(0,0,0,.08));
-}
-
 .intro.opening{
   opacity:0;
   transform:scale(1.012);
   filter:brightness(.86);
   pointer-events:none;
 }
-
 .brand{
   position:relative;
   z-index:2;
@@ -88,7 +157,6 @@ body{
   transform:translateY(10px);
   animation:brandIn 1.05s cubic-bezier(.2,.8,.2,1) .15s forwards;
 }
-
 .logo{
   display:block;
   width:min(36vw,310px);
@@ -97,159 +165,107 @@ body{
   object-fit:contain;
   filter:drop-shadow(0 0 16px rgba(210,170,68,.11));
 }
-
+.word-stage{
+  position:relative;
+  width:min(76vw,650px);
+  margin:0 auto;
+}
 .wordmark{
   display:block;
-  width:min(76vw,650px);
-  max-width:650px;
+  width:100%;
   height:auto;
-  margin:0 auto;
   object-fit:contain;
   filter:drop-shadow(0 0 10px rgba(210,170,68,.08));
 }
-
-.enter{
-  margin-top:34px;
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  border:0;
-  background:transparent;
-  color:rgba(237,225,194,.54);
-  font-family:"Manrope",sans-serif;
-  font-size:.65rem;
-  font-weight:400;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  padding:10px 4px;
-  cursor:pointer;
+.bullet{
+  position:absolute;
+  z-index:5;
+  top:50%;
+  left:-8%;
+  width:17px;
+  height:6px;
+  transform:translateY(-50%);
   opacity:0;
-  animation:enterIn .8s ease 1.05s forwards;
 }
-
-.enter .line{
-  width:30px;
+.bullet::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  clip-path:polygon(0 17%,70% 17%,100% 50%,70% 83%,0 83%);
+  background:linear-gradient(90deg,#7e5417,#bd892d 38%,#efd06f 70%,#97651d);
+  filter:drop-shadow(0 0 4px rgba(255,222,117,.8));
+}
+.bullet::after{
+  content:"";
+  position:absolute;
+  right:14px;
+  top:50%;
+  width:13px;
   height:1px;
-  background:linear-gradient(90deg,rgba(200,166,79,.2),rgba(200,166,79,.85));
-  transition:width .3s ease;
+  transform:translateY(-50%);
+  background:linear-gradient(90deg,transparent,rgba(255,234,160,.85));
 }
-
-.enter:hover{color:rgba(237,225,194,.8)}
-.enter:hover .line{width:42px}
-
-/* ---------------- INFO PAGE ---------------- */
-.info{
-  min-height:100svh;
-  display:grid;
-  place-items:center;
-  padding:72px 24px;
-  background:
-    radial-gradient(circle at 50% 0%,rgba(93,76,30,.09),transparent 35%),
-    linear-gradient(145deg,#0b140e 0%,#050806 100%);
-}
-
-.info-inner{
-  width:min(760px,100%);
-  text-align:center;
+.flash{
+  position:absolute;
+  z-index:4;
+  top:50%;
+  left:50%;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  transform:translate(-50%,-50%) scale(.2);
   opacity:0;
-  transform:translateY(14px);
+  background:#fff1bd;
+  box-shadow:
+    0 0 6px rgba(255,241,188,.95),
+    0 0 16px rgba(242,196,80,.72),
+    0 0 30px rgba(210,160,43,.34);
+}
+.intro.fire .bullet{animation:bulletPass .42s cubic-bezier(.13,.7,.22,.98) forwards}
+.intro.fire .flash{animation:flash .20s ease .18s forwards}
+.intro.fire .word-stage{animation:wordHit .34s ease}
+
+@keyframes brandIn{to{opacity:1;transform:none}}
+@keyframes infoIn{to{opacity:1;transform:none}}
+@keyframes breathe{from{transform:scale(1)}to{transform:scale(1.035)}}
+@keyframes bulletPass{
+  0%{left:-8%;opacity:0}
+  7%{opacity:1}
+  92%{opacity:1}
+  100%{left:108%;opacity:0}
+}
+@keyframes flash{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}
+  45%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.7)}
+}
+@keyframes wordHit{
+  0%,100%{filter:none}
+  50%{filter:brightness(1.18) drop-shadow(0 0 10px rgba(255,222,114,.40))}
 }
 
-.info.show .info-inner{
-  animation:infoIn .9s cubic-bezier(.22,.61,.36,1) .08s forwards;
-}
 
-.eyebrow{
-  margin:0 0 23px;
-  font-size:.66rem;
-  font-weight:400;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:rgba(217,190,119,.52);
-}
-
-.rule{
-  width:42px;
-  height:1px;
-  margin:0 auto 36px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);
-}
-
-.lead,
-.copy{
-  font-family:"Cormorant Garamond",Georgia,serif;
-  font-weight:400;
-}
-
-.lead{
-  margin:0 auto 24px;
-  max-width:720px;
-  font-size:clamp(1.55rem,2.8vw,2.15rem);
-  line-height:1.48;
-  letter-spacing:.005em;
-  color:#f2efe7;
-}
-
-.copy{
-  margin:0 auto 30px;
-  max-width:700px;
-  font-size:clamp(1.08rem,1.8vw,1.3rem);
-  line-height:1.72;
-  color:rgba(239,235,225,.66);
-}
-
-.contact{
-  margin-top:48px;
-  padding-top:28px;
-  border-top:1px solid rgba(201,167,77,.15);
-}
-
-.contact-label{
-  display:block;
-  margin-bottom:10px;
-  font-size:.63rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:rgba(235,223,192,.4);
-}
-
-.contact a{
-  color:#d6b65d;
-  text-decoration:none;
-  font-family:"Cormorant Garamond",Georgia,serif;
-  font-size:clamp(1.2rem,2.1vw,1.42rem);
-  transition:color .2s ease,text-shadow .2s ease;
-}
-.contact a:hover{
-  color:#ecd27e;
-  text-shadow:0 0 14px rgba(222,184,84,.18);
-}
-
-@keyframes brandIn{
-  to{opacity:1;transform:none}
-}
-@keyframes enterIn{
-  to{opacity:1}
-}
-@keyframes infoIn{
-  to{opacity:1;transform:none}
-}
-@keyframes breathe{
-  from{transform:scale(1)}
-  to{transform:scale(1.035)}
+.footer{
+  margin-top:54px;
+  font-family:"Manrope",system-ui,sans-serif;
+  font-size:.62rem;
+  font-weight:300;
+  letter-spacing:.08em;
+  color:rgba(235,223,192,.30);
 }
 
 @media(max-width:600px){
   .brand{width:92vw}
   .logo{width:min(55vw,250px);margin-bottom:22px}
-  .wordmark{width:88vw}
-  .enter{margin-top:28px}
+  .word-stage{width:88vw}
+  .bullet{width:14px;height:5px}
   .info{padding:56px 22px}
+  .info-logo{width:56px;height:56px}
 }
-
 @media(prefers-reduced-motion:reduce){
-  .intro::before,.brand,.enter,.info.show .info-inner{animation:none}
-  .brand,.enter{opacity:1;transform:none}
+  .intro::before,.brand,.info.show .info-inner{animation:none}
+  .brand{opacity:1;transform:none}
+  .bullet,.flash{display:none}
 }
 </style>
 </head>
@@ -258,6 +274,7 @@ body{
 
 <section class="info" id="info">
   <div class="info-inner">
+    <img class="info-logo" src="assets/gold-logo-only.png" alt="Sivraakiny emblem">
     <p class="eyebrow">Sivraakiny Industries</p>
     <div class="rule"></div>
 
@@ -273,17 +290,19 @@ body{
       <span class="contact-label">Business &amp; collaboration enquiries</span>
       <a href="mailto:contact@sivraakiny.com">contact@sivraakiny.com</a>
     </div>
+    <footer class="footer">© 2026 Sivraakiny Industries. All rights reserved.</footer>
   </div>
 </section>
 
-<section class="intro" id="intro" tabindex="0" aria-label="Enter Sivraakiny Industries website">
+<section class="intro" id="intro" tabindex="0" aria-label="Sivraakiny Industries">
   <div class="brand">
     <img class="logo" src="assets/gold-logo-only.png" alt="Sivraakiny emblem">
-    <img class="wordmark" src="assets/gold-english-lettering.png" alt="Sivraakiny Industries">
-    <button class="enter" type="button" aria-label="Enter website">
-      <span>Enter</span>
-      <span class="line" aria-hidden="true"></span>
-    </button>
+
+    <div class="word-stage">
+      <img class="wordmark" src="assets/gold-english-lettering.png" alt="Sivraakiny Industries">
+      <span class="bullet" aria-hidden="true"></span>
+      <span class="flash" aria-hidden="true"></span>
+    </div>
   </div>
 </section>
 
@@ -296,13 +315,17 @@ function openSite(){
   if(opened) return;
   opened = true;
 
-  intro.classList.add("opening");
-  info.classList.add("show");
+  intro.classList.add("fire");
 
-  window.setTimeout(() => {
+  setTimeout(() => {
+    intro.classList.add("opening");
+    info.classList.add("show");
+  }, 520);
+
+  setTimeout(() => {
     intro.remove();
     document.body.style.overflow = "auto";
-  }, 950);
+  }, 1450);
 }
 
 intro.addEventListener("click", openSite);
