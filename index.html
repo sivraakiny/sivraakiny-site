@@ -182,8 +182,8 @@ body{
   z-index:5;
   top:50%;
   left:-8%;
-  width:17px;
-  height:6px;
+  width:13px;
+  height:4px;
   transform:translateY(-50%);
   opacity:0;
 }
@@ -221,67 +221,70 @@ body{
     0 0 16px rgba(242,196,80,.72),
     0 0 30px rgba(210,160,43,.34);
 }
-.intro.fire .bullet{animation:bulletPass .42s cubic-bezier(.13,.7,.22,.98) forwards}
-.intro.fire .flash{animation:flash .20s ease .18s forwards}
-.intro.fire .word-stage{animation:wordHit .34s ease}
+.intro.fire .bullet{animation:bulletPass .145s linear forwards}
+.intro.fire .flash{animation:impactFlash .14s ease .065s forwards}
+.intro.fire .word-stage{animation:wordHit .22s ease .055s}
 
 
-/* Bullet becomes a razor-thin cut across the full screen. */
-.slit,
-.slit-dark{
+/* High-speed shot: the eye sees the streak and impact more than the projectile. */
+.shot-trail{
   position:absolute;
   z-index:3;
-  left:0;
   top:50%;
+  left:-3%;
   width:0;
   height:1px;
   transform:translateY(-50%);
-  pointer-events:none;
   opacity:0;
-}
-.slit{
   background:linear-gradient(
     90deg,
-    rgba(255,230,139,0),
-    rgba(255,231,141,.55) 10%,
-    rgba(255,247,207,.98) 50%,
-    rgba(225,179,62,.55) 90%,
-    rgba(255,230,139,0)
+    rgba(255,226,127,0),
+    rgba(255,221,107,.16) 35%,
+    rgba(255,239,174,.72) 82%,
+    rgba(255,248,213,.95)
   );
+  filter:blur(.2px);
+}
+.intro.fire .shot-trail{
+  animation:shotTrail .145s linear forwards;
+}
+
+/* The residual cut is confined to the lettering itself. */
+.cut-mark{
+  position:absolute;
+  z-index:4;
+  left:0;
+  top:50%;
+  width:100%;
+  height:1px;
+  transform:translateY(-50%) scaleX(0);
+  transform-origin:left center;
+  opacity:0;
+  background:linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(57,35,8,.78) 4%,
+    rgba(255,222,120,.36) 5%,
+    rgba(49,30,7,.78) 48%,
+    rgba(245,204,99,.28) 50%,
+    rgba(49,30,7,.76) 95%,
+    transparent 100%
+  );
+  box-shadow:0 0 2px rgba(236,190,75,.18);
+}
+.intro.fire .cut-mark{
+  animation:cutAppear .16s linear .045s forwards;
+}
+
+/* Small concentrated impact spark; intentionally not a large lens flare. */
+.flash{
+  width:4px;
+  height:4px;
+  left:52%;
   box-shadow:
-    0 0 4px rgba(255,239,180,.9),
-    0 0 11px rgba(224,177,61,.38);
-}
-.slit-dark{
-  top:calc(50% + 2px);
-  background:rgba(3,9,5,.72);
-  box-shadow:0 1px 0 rgba(255,231,143,.12);
-}
-.intro.slitting .slit{
-  animation:slitAcross .34s cubic-bezier(.18,.72,.2,1) forwards;
-}
-.intro.slitting .slit-dark{
-  animation:slitAcrossDark .34s cubic-bezier(.18,.72,.2,1) .03s forwards;
-}
-
-/* Once cut, the two sides separate by only a few pixels before the clean fade.
-   This reads as the surface physically opening rather than two pre-existing panels. */
-.intro.slit-open{
-  clip-path:polygon(
-    0 0,100% 0,100% 49.72%,0 49.72%,
-    0 50.28%,100% 50.28%,100% 100%,0 100%
-  );
-}
-
-@keyframes slitAcross{
-  0%{width:0;opacity:0}
-  8%{opacity:1}
-  100%{width:100%;opacity:1}
-}
-@keyframes slitAcrossDark{
-  0%{width:0;opacity:0}
-  12%{opacity:.8}
-  100%{width:100%;opacity:.8}
+    0 0 4px rgba(255,247,210,.95),
+    0 0 9px rgba(255,215,99,.72),
+    0 0 16px rgba(207,153,35,.30);
 }
 
 @keyframes brandIn{to{opacity:1;transform:none}}
@@ -311,6 +314,23 @@ body{
   font-weight:300;
   letter-spacing:.08em;
   color:rgba(235,223,192,.30);
+}
+
+
+@keyframes shotTrail{
+  0%{width:0;opacity:0}
+  8%{opacity:.9}
+  100%{width:106%;opacity:0}
+}
+@keyframes cutAppear{
+  0%{transform:translateY(-50%) scaleX(0);opacity:0}
+  12%{opacity:.9}
+  100%{transform:translateY(-50%) scaleX(1);opacity:.72}
+}
+@keyframes impactFlash{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.15)}
+  30%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(2.2)}
 }
 
 @media(max-width:600px){
@@ -359,13 +379,12 @@ body{
 
     <div class="word-stage">
       <img class="wordmark" src="assets/gold-english-lettering.png" alt="Sivraakiny Industries">
+      <span class="shot-trail" aria-hidden="true"></span>
+      <span class="cut-mark" aria-hidden="true"></span>
       <span class="bullet" aria-hidden="true"></span>
       <span class="flash" aria-hidden="true"></span>
     </div>
   </div>
-
-  <div class="slit" aria-hidden="true"></div>
-  <div class="slit-dark" aria-hidden="true"></div>
 </section>
 
 <script>
@@ -379,26 +398,16 @@ function openSite(){
 
   intro.classList.add("fire");
 
-  // The bullet traces the cut; the slit continues across the whole screen.
-  setTimeout(() => {
-    intro.classList.add("slitting");
-  }, 250);
-
-  // A hairline dark separation makes the surface feel physically sliced.
-  setTimeout(() => {
-    intro.classList.add("slit-open");
-  }, 560);
-
-  // Only after the cut is complete does the green surface disappear.
+  // The shot is nearly instantaneous. Hold the resulting precision cut briefly.
   setTimeout(() => {
     intro.classList.add("opening");
     info.classList.add("show");
-  }, 720);
+  }, 700);
 
   setTimeout(() => {
     intro.remove();
     document.body.style.overflow = "auto";
-  }, 1650);
+  }, 1600);
 }
 
 intro.addEventListener("click", openSite);
