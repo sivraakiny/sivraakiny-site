@@ -1,56 +1,366 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#18361f">
-  <title>Sivraakiny Industries</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17371f">
+<title>Sivraakiny Industries</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --green:#17371f;
+  --green2:#102b18;
+  --deep:#060a07;
+  --gold1:#6f4b14;
+  --gold2:#a87722;
+  --gold3:#d5ad4a;
+  --gold4:#efd27a;
+  --cream:#eee8d8;
+}
+html,body{margin:0;min-height:100%;background:var(--deep)}
+body{
+  color:var(--cream);
+  font-family:Helvetica,Arial,sans-serif;
+  overflow:hidden;
+}
+
+/* ---------- INTRO ---------- */
+.intro{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 43%,rgba(88,120,78,.17),transparent 38%),
+    linear-gradient(145deg,#1d4327 0%,#15391f 52%,#0e2b17 100%);
+}
+
+.brand{
+  width:min(86vw,760px);
+  text-align:center;
+  position:relative;
+  z-index:4;
+  opacity:0;
+  transform:translateY(8px) scale(.99);
+  animation:introIn .9s ease-out .15s forwards;
+}
+
+.logo{
+  display:block;
+  width:min(50vw,400px);
+  max-height:52vh;
+  object-fit:contain;
+  margin:0 auto 24px;
+  mix-blend-mode:multiply;
+  filter:brightness(1.1) contrast(1.06) drop-shadow(0 0 16px rgba(206,162,52,.12));
+}
+
+.wordmark{
+  position:relative;
+  display:inline-block;
+  overflow:visible;
+}
+
+h1{
+  margin:0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:500;
+  font-size:clamp(2.35rem,6vw,5.8rem);
+  line-height:.95;
+  letter-spacing:-.04em;
+  background:linear-gradient(
+    180deg,
+    #72501a 0%,
+    #a97925 18%,
+    #d2aa47 36%,
+    #efd17a 44%,
+    #b17f28 57%,
+    #d0a64a 73%,
+    #694713 100%
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  filter:
+    drop-shadow(0 1px 0 rgba(0,0,0,.55))
+    drop-shadow(0 0 8px rgba(214,171,57,.20));
+}
+
+/* Actual tiny bullet silhouette */
+.bullet{
+  position:absolute;
+  top:50%;
+  left:-13%;
+  width:18px;
+  height:6px;
+  transform:translateY(-50%);
+  opacity:0;
+  z-index:7;
+  filter:drop-shadow(0 0 4px rgba(255,220,112,.75));
+}
+
+/* projectile nose */
+.bullet::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:55% 18% 18% 55% / 50%;
+  background:linear-gradient(
+    90deg,
+    #8b5a16 0%,
+    #d6a23a 45%,
+    #f0cd69 74%,
+    #9f6d20 100%
+  );
+  clip-path:polygon(0 16%,72% 16%,100% 50%,72% 84%,0 84%);
+  box-shadow:inset 0 1px 1px rgba(255,244,184,.45);
+}
+
+/* short light trail */
+.bullet::after{
+  content:"";
+  position:absolute;
+  right:15px;
+  top:50%;
+  width:16px;
+  height:2px;
+  transform:translateY(-50%);
+  background:linear-gradient(90deg,transparent,rgba(255,218,105,.25),rgba(255,240,176,.95));
+  filter:blur(.45px);
+}
+
+/* Bright cut line created after bullet passes */
+.cut-line{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:0;
+  height:1px;
+  transform:translate(-50%,-50%);
+  z-index:6;
+  opacity:0;
+  background:linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(213,164,55,.5) 10%,
+    rgba(255,244,188,1) 50%,
+    rgba(213,164,55,.5) 90%,
+    transparent 100%
+  );
+  box-shadow:0 0 6px rgba(255,222,116,.75),0 0 16px rgba(218,168,51,.35);
+}
+
+.intro.fire .bullet{
+  animation:bulletPass .42s cubic-bezier(.15,.68,.27,.98) forwards;
+}
+
+.intro.fire h1{
+  animation:metalFlash .48s ease forwards;
+}
+
+.intro.line .cut-line{
+  animation:lineGrow .34s ease-out forwards;
+}
+
+/* two masks that physically open apart */
+.panel{
+  position:absolute;
+  left:0;
+  width:100%;
+  height:50%;
+  z-index:10;
+  background:
+    radial-gradient(circle at 50% 80%,rgba(74,103,64,.08),transparent 42%),
+    linear-gradient(145deg,#1d4327,#15391f 55%,#0e2b17);
+  pointer-events:none;
+  opacity:0;
+}
+.panel.top{top:0}
+.panel.bottom{bottom:0}
+
+.intro.split .panel{opacity:1}
+.intro.split .panel.top{
+  border-bottom:1px solid rgba(255,226,139,.55);
+  box-shadow:0 3px 16px rgba(226,177,57,.34);
+  animation:openTop .95s cubic-bezier(.78,0,.2,1) forwards;
+}
+.intro.split .panel.bottom{
+  border-top:1px solid rgba(255,226,139,.55);
+  box-shadow:0 -3px 16px rgba(226,177,57,.34);
+  animation:openBottom .95s cubic-bezier(.78,0,.2,1) forwards;
+}
+
+/* ---------- INFO ---------- */
+.info{
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  padding:70px 24px;
+  background:
+    radial-gradient(circle at 50% 5%,rgba(91,76,31,.12),transparent 36%),
+    linear-gradient(145deg,#0b130d,#050806);
+}
+.info-inner{
+  width:min(100%,790px);
+  text-align:center;
+  opacity:0;
+  transform:translateY(12px);
+}
+.info.show .info-inner{
+  animation:infoIn .8s ease .12s forwards;
+}
+.mini-logo{
+  width:82px;
+  height:82px;
+  object-fit:cover;
+  object-position:50% 42%;
+  opacity:.36;
+  mix-blend-mode:screen;
+  filter:sepia(1) saturate(.7) brightness(.7) contrast(1.2);
+}
+.rule{
+  width:44px;
+  height:1px;
+  margin:24px auto 34px;
+  background:linear-gradient(90deg,transparent,#cba84d,transparent);
+}
+.info p{
+  margin:0 auto 24px;
+  font-family:Georgia,"Times New Roman",serif;
+}
+.lead{
+  color:#f0ede4;
+  font-size:clamp(1.28rem,2.3vw,1.7rem);
+  line-height:1.63;
+}
+.copy{
+  color:rgba(238,234,224,.68);
+  font-size:clamp(1rem,1.6vw,1.18rem);
+  line-height:1.85;
+}
+.contact{
+  margin-top:48px;
+  padding-top:28px;
+  border-top:1px solid rgba(204,168,72,.18);
+}
+.contact span{
+  display:block;
+  margin-bottom:10px;
+  color:rgba(237,225,193,.43);
+  font-size:.68rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.contact a{
+  color:#d6b75e;
+  text-decoration:none;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(1.05rem,2vw,1.24rem);
+}
+
+@keyframes introIn{
+  to{opacity:1;transform:none}
+}
+@keyframes bulletPass{
+  0%{left:-13%;opacity:0}
+  7%{opacity:1}
+  92%{opacity:1}
+  100%{left:108%;opacity:0}
+}
+@keyframes metalFlash{
+  0%,100%{
+    filter:drop-shadow(0 1px 0 rgba(0,0,0,.55)) drop-shadow(0 0 8px rgba(214,171,57,.20));
+  }
+  50%{
+    filter:brightness(1.25) drop-shadow(0 0 12px rgba(255,223,120,.55));
+  }
+}
+@keyframes lineGrow{
+  0%{width:0;opacity:0}
+  15%{opacity:1}
+  100%{width:110vw;opacity:1}
+}
+@keyframes openTop{to{transform:translateY(-103%)}}
+@keyframes openBottom{to{transform:translateY(103%)}}
+@keyframes infoIn{to{opacity:1;transform:none}}
+
+@media(max-width:600px){
+  .brand{width:92vw}
+  .logo{width:min(72vw,340px);margin-bottom:18px}
+  h1{font-size:clamp(2.25rem,12vw,4rem)}
+  .bullet{width:15px;height:5px}
+  .info{padding:54px 24px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body{overflow:auto}
+  .intro{display:none}
+  .info-inner{opacity:1;transform:none}
+}
+</style>
 </head>
 <body>
-  <main class="site">
-    <section class="intro" id="intro" aria-label="Sivraakiny Industries">
-      <div class="grain"></div>
 
-      <div class="brand">
-        <img src="assets/gold-logo.png" alt="Sivraakiny">
-        <div class="wordmark-wrap">
-          <h1>Sivraakiny Industries</h1>
-          <span class="shot" aria-hidden="true"></span>
-        </div>
-      </div>
+<section class="intro" id="intro">
+  <div class="brand">
+    <img class="logo" src="assets/gold-logo.png" alt="Sivraakiny">
+    <div class="wordmark">
+      <h1>Sivraakiny Industries</h1>
+      <span class="bullet" aria-hidden="true"></span>
+      <span class="cut-line" aria-hidden="true"></span>
+    </div>
+  </div>
 
-      <div class="cut cut-top" aria-hidden="true"></div>
-      <div class="cut cut-bottom" aria-hidden="true"></div>
-    </section>
+  <div class="panel top" aria-hidden="true"></div>
+  <div class="panel bottom" aria-hidden="true"></div>
+</section>
 
-    <section class="information" id="information">
-      <div class="info-inner">
-        <div class="mark">
-          <img src="assets/gold-logo.png" alt="" aria-hidden="true">
-        </div>
+<section class="info" id="info">
+  <div class="info-inner">
+    <img class="mini-logo" src="assets/gold-logo.png" alt="">
+    <div class="rule"></div>
 
-        <div class="rule"></div>
+    <p class="lead">
+      Sivraakiny Industries is an Indian defence manufacturing company committed to building advanced indigenous capabilities in support of India's defence requirements.
+    </p>
 
-        <p class="lead">
-          Sivraakiny Industries is an Indian defence manufacturing company committed to building
-          advanced indigenous capabilities in support of India's defence requirements.
-        </p>
+    <p class="copy">
+      Given the sensitive nature of defence manufacturing, information regarding our manufacturing capabilities and operations is intentionally limited on this website, in keeping with applicable Government of India security and confidentiality requirements.
+    </p>
 
-        <p class="body-copy">
-          Given the sensitive nature of defence manufacturing, information regarding our manufacturing
-          capabilities and operations is intentionally limited on this website, in keeping with applicable
-          Government of India security and confidentiality requirements.
-        </p>
+    <div class="contact">
+      <span>Business &amp; collaboration enquiries</span>
+      <a href="mailto:contact@sivraakiny.com">contact@sivraakiny.com</a>
+    </div>
+  </div>
+</section>
 
-        <div class="contact">
-          <span>Business &amp; collaboration enquiries</span>
-          <a href="mailto:contact@sivraakiny.com">contact@sivraakiny.com</a>
-        </div>
-      </div>
-    </section>
-  </main>
+<script>
+window.addEventListener("load", function () {
+  const intro = document.getElementById("intro");
+  const info = document.getElementById("info");
 
-  <script src="script.js"></script>
+  // Sequence is intentionally all inline so GitHub Pages cannot miss a separate JS file.
+  setTimeout(() => {
+    intro.classList.add("fire");
+  }, 1200);
+
+  setTimeout(() => {
+    intro.classList.add("line");
+  }, 1600);
+
+  setTimeout(() => {
+    intro.classList.add("split");
+    info.classList.add("show");
+  }, 1840);
+
+  setTimeout(() => {
+    intro.style.display = "none";
+    document.body.style.overflow = "auto";
+  }, 2950);
+});
+</script>
 </body>
 </html>
