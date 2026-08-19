@@ -226,53 +226,73 @@ body{
 .intro.fire .word-stage{animation:wordHit .34s ease}
 
 
-/* One clean screen-wide shot. It passes through the wordmark and breaks at the far edge. */
+/* Shot path is anchored to the vertical centre of the ACTUAL lettering,
+   but spans the full viewport from left edge to right edge. */
 .bullet{
-  position:fixed;
-  z-index:8;
-  top:50%;
-  left:-28px;
-  width:15px;
-  height:5px;
-  transform:translateY(-50%);
+  position:fixed !important;
+  z-index:30 !important;
+  top:var(--shot-y,50vh) !important;
+  left:-42px !important;
+  width:18px !important;
+  height:6px !important;
+  margin:0 !important;
+  transform:translateY(-50%) !important;
   opacity:0;
+  pointer-events:none;
 }
 .bullet::before{
   content:"";
   position:absolute;
   inset:0;
-  clip-path:polygon(0 18%,70% 18%,100% 50%,70% 82%,0 82%);
-  background:linear-gradient(90deg,#765018,#b8832a 38%,#efd171 70%,#96641d);
-  filter:drop-shadow(0 0 3px rgba(255,223,121,.72));
+  clip-path:polygon(0 17%,70% 17%,100% 50%,70% 83%,0 83%);
+  background:linear-gradient(90deg,#745019 0%,#b98229 38%,#efd06f 70%,#96641d 100%);
+  filter:drop-shadow(0 0 4px rgba(255,223,121,.78));
 }
 .bullet::after{
   content:"";
   position:absolute;
-  right:12px;
+  right:15px;
   top:50%;
-  width:24px;
+  width:30px;
   height:1px;
   transform:translateY(-50%);
-  background:linear-gradient(90deg,transparent,rgba(255,235,163,.78));
+  background:linear-gradient(90deg,transparent,rgba(255,235,163,.82));
   filter:blur(.25px);
 }
 .intro.fire .bullet{
-  animation:screenShot .24s cubic-bezier(.15,.68,.22,.98) forwards;
+  animation:edgeToEdgeShot .32s linear forwards !important;
 }
 
-/* Small restrained impact at the far right of the viewport. */
-.impact{
+/* Pinpoint glint is also placed on the lettering's measured centreline. */
+.flash{
+  position:fixed !important;
+  z-index:29 !important;
+  top:var(--shot-y,50vh) !important;
+  left:50% !important;
+  width:4px !important;
+  height:4px !important;
+  margin:0 !important;
+}
+.intro.fire .flash{
+  animation:letterImpact .13s ease .13s forwards !important;
+}
+.intro.fire .word-stage{
+  animation:wordPassFixed .22s ease .09s !important;
+}
+
+/* Small break/spark exactly at the right browser edge. */
+.edge-impact{
   position:fixed;
-  z-index:9;
-  right:4px;
-  top:50%;
-  width:10px;
-  height:10px;
-  transform:translateY(-50%);
+  z-index:31;
+  right:0;
+  top:var(--shot-y,50vh);
+  width:8px;
+  height:8px;
+  transform:translate(35%,-50%);
   opacity:0;
   pointer-events:none;
 }
-.impact::before{
+.edge-impact::before{
   content:"";
   position:absolute;
   left:50%;
@@ -281,66 +301,52 @@ body{
   height:4px;
   border-radius:50%;
   transform:translate(-50%,-50%);
-  background:#fff0b5;
-  box-shadow:
-    0 0 5px rgba(255,240,181,.95),
-    0 0 12px rgba(229,181,63,.55);
+  background:#fff0b8;
+  box-shadow:0 0 5px rgba(255,242,190,.95),0 0 12px rgba(226,178,60,.55);
 }
-.impact i{
+.edge-impact i{
   position:absolute;
   left:50%;
   top:50%;
-  width:5px;
+  width:3px;
   height:1px;
   transform-origin:0 50%;
-  background:linear-gradient(90deg,#e5bb5a,transparent);
+  background:linear-gradient(90deg,#e6bb59,transparent);
   opacity:0;
 }
-.impact i:nth-child(1){transform:rotate(15deg)}
-.impact i:nth-child(2){transform:rotate(-22deg)}
-.impact i:nth-child(3){transform:rotate(48deg)}
-.impact i:nth-child(4){transform:rotate(-55deg)}
-.impact i:nth-child(5){transform:rotate(82deg)}
-.impact i:nth-child(6){transform:rotate(-86deg)}
-.intro.fire .impact{
-  animation:impactPop .28s ease .20s forwards;
-}
-.intro.fire .impact i{
-  animation:fragment .30s ease-out .20s forwards;
-}
+.edge-impact i:nth-child(1){transform:rotate(150deg)}
+.edge-impact i:nth-child(2){transform:rotate(175deg)}
+.edge-impact i:nth-child(3){transform:rotate(205deg)}
+.edge-impact i:nth-child(4){transform:rotate(125deg)}
+.edge-impact i:nth-child(5){transform:rotate(230deg)}
+.edge-impact i:nth-child(6){transform:rotate(95deg)}
+.intro.fire .edge-impact{animation:edgePop .26s ease .30s forwards}
+.intro.fire .edge-impact i{animation:edgeFragment .28s ease-out .30s forwards}
 
-/* Only a brief glint while crossing the lettering; no cut or damage remains. */
-.intro.fire .word-stage{
-  animation:wordPass .22s ease .08s;
+@keyframes edgeToEdgeShot{
+  0%{left:-42px;opacity:0}
+  4%{opacity:1}
+  96%{opacity:1}
+  100%{left:calc(100vw + 24px);opacity:0}
 }
-.intro.fire .flash{
-  animation:letterFlash .13s ease .10s forwards;
+@keyframes letterImpact{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.15)}
+  40%{opacity:.9;transform:translate(-50%,-50%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.7)}
 }
-
-@keyframes screenShot{
-  0%{left:-28px;opacity:0}
-  6%{opacity:1}
-  94%{opacity:1}
-  100%{left:calc(100vw + 8px);opacity:0}
-}
-@keyframes wordPass{
+@keyframes wordPassFixed{
   0%,100%{filter:none}
-  50%{filter:brightness(1.15) drop-shadow(0 0 9px rgba(255,220,110,.34))}
+  50%{filter:brightness(1.15) drop-shadow(0 0 9px rgba(255,220,110,.32))}
 }
-@keyframes letterFlash{
-  0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}
-  45%{opacity:.85;transform:translate(-50%,-50%) scale(.9)}
-  100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}
+@keyframes edgePop{
+  0%{opacity:0;transform:translate(35%,-50%) scale(.25)}
+  30%{opacity:1;transform:translate(35%,-50%) scale(1)}
+  100%{opacity:0;transform:translate(35%,-50%) scale(1.7)}
 }
-@keyframes impactPop{
-  0%{opacity:0;transform:translateY(-50%) scale(.3)}
-  28%{opacity:1;transform:translateY(-50%) scale(1)}
-  100%{opacity:0;transform:translateY(-50%) scale(1.8)}
-}
-@keyframes fragment{
+@keyframes edgeFragment{
   0%{opacity:0;width:2px}
-  30%{opacity:.9}
-  100%{opacity:0;width:14px}
+  28%{opacity:.85}
+  100%{opacity:0;width:15px}
 }
 
 @keyframes brandIn{to{opacity:1;transform:none}}
@@ -420,7 +426,7 @@ body{
       <img class="wordmark" src="assets/gold-english-lettering.png" alt="Sivraakiny Industries">
       <span class="bullet" aria-hidden="true"></span>
       <span class="flash" aria-hidden="true"></span>
-      <span class="impact" aria-hidden="true">
+      <span class="edge-impact" aria-hidden="true">
         <i></i><i></i><i></i><i></i><i></i><i></i>
       </span>
     </div>
@@ -436,18 +442,24 @@ function openSite(){
   if(opened) return;
   opened = true;
 
+  // Measure the rendered English lettering itself. This prevents the shot
+  // from using the centre of the viewport or the overall logo lockup.
+  const wordmark = intro.querySelector(".wordmark");
+  const rect = wordmark.getBoundingClientRect();
+  const shotY = rect.top + (rect.height * 0.50);
+  intro.style.setProperty("--shot-y", shotY + "px");
+
   intro.classList.add("fire");
 
-  // Shot crosses the entire viewport, passes through the lettering, and breaks at the far edge.
   setTimeout(() => {
     intro.classList.add("opening");
     info.classList.add("show");
-  }, 760);
+  }, 780);
 
   setTimeout(() => {
     intro.remove();
     document.body.style.overflow = "auto";
-  }, 1650);
+  }, 1680);
 }
 
 intro.addEventListener("click", openSite);
