@@ -233,8 +233,8 @@ body{
   z-index:40;
   top:var(--shot-y,50vh);
   left:-70px;
-  width:24px;
-  height:8px;
+  width:34px;
+  height:11px;
   transform:translateY(-50%);
   opacity:0;
   pointer-events:none;
@@ -266,9 +266,9 @@ body{
   content:"";
   position:absolute;
   top:50%;
-  right:20px;
-  width:34px;
-  height:2px;
+  right:29px;
+  width:46px;
+  height:2.5px;
   transform:translateY(-50%);
   background:linear-gradient(
     90deg,
@@ -281,13 +281,13 @@ body{
 }
 
 .intro.fire .shot-bullet{
-  animation:realShot .72s cubic-bezier(.12,.69,.19,.99) forwards;
+  animation:realShot 1.5s cubic-bezier(.12,.69,.19,.99) forwards;
 }
 
 /* The lettering only reacts while the projectile is physically crossing it.
    No permanent cut, no decorative flash. */
 .intro.fire .wordmark{
-  animation:projectileThroughWord .50s ease .15s;
+  animation:projectileThroughWord 1.0s ease .30s;
 }
 
 /* Restrained impact at the far-right edge. */
@@ -334,10 +334,10 @@ body{
 .edge-impact i:nth-child(6){transform:rotate(100deg)}
 
 .intro.fire .edge-impact{
-  animation:edgeBreak .38s ease .69s forwards;
+  animation:edgeBreak .52s ease 1.46s forwards;
 }
 .intro.fire .edge-impact i{
-  animation:edgeShard .40s ease-out .69s forwards;
+  animation:edgeShard .54s ease-out 1.46s forwards;
 }
 
 @keyframes realShot{
@@ -417,12 +417,12 @@ body{
     0 0 13px rgba(218,164,49,.34);
 }
 .intro.fire .bullet-glint{
-  animation:travellingGlint .72s ease forwards;
+  animation:travellingGlint 1.5s ease forwards;
 }
 
 /* Make the projectile wake briefly flare as it crosses the gold lettering. */
 .intro.fire .shot-bullet::after{
-  animation:wakePulse .72s linear forwards;
+  animation:wakePulse 1.5s linear forwards;
 }
 
 /* A brief specular streak across the actual wordmark at the instant of passage. */
@@ -449,7 +449,7 @@ body{
   filter:blur(.25px);
 }
 .intro.fire .word-stage::after{
-  animation:textGlint .38s cubic-bezier(.18,.72,.22,1) .17s forwards;
+  animation:textGlint .82s cubic-bezier(.18,.72,.22,1) .34s forwards;
 }
 
 /* Refine the right-edge shatter: hot central point + short directional sparks. */
@@ -604,12 +604,12 @@ function openSite(){
   setTimeout(() => {
     intro.classList.add("opening");
     info.classList.add("show");
-  }, 1280);
+  }, 2250);
 
   setTimeout(() => {
     intro.remove();
     document.body.style.overflow = "auto";
-  }, 2180);
+  }, 3150);
 }
 
 intro.addEventListener("click", openSite);
