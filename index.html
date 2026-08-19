@@ -63,7 +63,7 @@ body{
   font-weight:400;
   letter-spacing:.22em;
   text-transform:uppercase;
-  color:rgba(217,190,119,.50);
+  color:rgba(205,171,82,.64);
 }
 .rule{
   width:42px;
@@ -81,14 +81,14 @@ body{
   font-size:clamp(1.48rem,2.55vw,1.98rem);
   line-height:1.54;
   letter-spacing:.005em;
-  color:#f2efe7;
+  color:#d8b85f;
 }
 .copy{
   margin:0 auto 30px;
   max-width:700px;
   font-size:clamp(1.03rem,1.65vw,1.20rem);
   line-height:1.78;
-  color:rgba(239,235,225,.66);
+  color:rgba(201,168,83,.76);
 }
 .contact{
   margin-top:48px;
@@ -101,17 +101,17 @@ body{
   font-size:.63rem;
   letter-spacing:.18em;
   text-transform:uppercase;
-  color:rgba(235,223,192,.4);
+  color:rgba(187,151,67,.58);
 }
 .contact a{
-  color:#d6b65d;
+  color:#cda94e;
   text-decoration:none;
   font-family:"Source Serif 4",Georgia,serif;
   font-size:clamp(1.2rem,2.1vw,1.42rem);
   transition:color .2s ease,text-shadow .2s ease;
 }
 .contact a:hover{
-  color:#ecd27e;
+  color:#e0c46f;
   text-shadow:0 0 14px rgba(222,184,84,.18);
 }
 
@@ -281,13 +281,13 @@ body{
 }
 
 .intro.fire .shot-bullet{
-  animation:realShot .46s cubic-bezier(.12,.69,.19,.99) forwards;
+  animation:realShot .72s cubic-bezier(.12,.69,.19,.99) forwards;
 }
 
 /* The lettering only reacts while the projectile is physically crossing it.
    No permanent cut, no decorative flash. */
 .intro.fire .wordmark{
-  animation:projectileThroughWord .34s ease .10s;
+  animation:projectileThroughWord .50s ease .15s;
 }
 
 /* Restrained impact at the far-right edge. */
@@ -334,10 +334,10 @@ body{
 .edge-impact i:nth-child(6){transform:rotate(100deg)}
 
 .intro.fire .edge-impact{
-  animation:edgeBreak .32s ease .43s forwards;
+  animation:edgeBreak .38s ease .69s forwards;
 }
 .intro.fire .edge-impact i{
-  animation:edgeShard .34s ease-out .43s forwards;
+  animation:edgeShard .40s ease-out .69s forwards;
 }
 
 @keyframes realShot{
@@ -417,12 +417,12 @@ body{
     0 0 13px rgba(218,164,49,.34);
 }
 .intro.fire .bullet-glint{
-  animation:travellingGlint .46s ease forwards;
+  animation:travellingGlint .72s ease forwards;
 }
 
 /* Make the projectile wake briefly flare as it crosses the gold lettering. */
 .intro.fire .shot-bullet::after{
-  animation:wakePulse .46s linear forwards;
+  animation:wakePulse .72s linear forwards;
 }
 
 /* A brief specular streak across the actual wordmark at the instant of passage. */
@@ -449,7 +449,7 @@ body{
   filter:blur(.25px);
 }
 .intro.fire .word-stage::after{
-  animation:textGlint .24s cubic-bezier(.18,.72,.22,1) .10s forwards;
+  animation:textGlint .38s cubic-bezier(.18,.72,.22,1) .17s forwards;
 }
 
 /* Refine the right-edge shatter: hot central point + short directional sparks. */
@@ -519,7 +519,7 @@ body{
   font-size:.62rem;
   font-weight:300;
   letter-spacing:.08em;
-  color:rgba(235,223,192,.30);
+  color:rgba(174,139,59,.48);
 }
 
 @media(max-width:600px){
@@ -604,12 +604,12 @@ function openSite(){
   setTimeout(() => {
     intro.classList.add("opening");
     info.classList.add("show");
-  }, 980);
+  }, 1280);
 
   setTimeout(() => {
     intro.remove();
     document.body.style.overflow = "auto";
-  }, 1880);
+  }, 2180);
 }
 
 intro.addEventListener("click", openSite);
