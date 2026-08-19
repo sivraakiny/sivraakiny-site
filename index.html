@@ -3,53 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#173b22">
+<meta name="theme-color" content="#1b4526">
 <title>Sivraakiny Industries</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;min-height:100%;background:#07100a}
-body{overflow:hidden;color:#eee9dc;font-family:Helvetica,Arial,sans-serif}
+body{color:#eee9dc;font-family:Helvetica,Arial,sans-serif;overflow:hidden}
 
-.info{
-  position:fixed;inset:0;
-  display:grid;place-items:center;
-  padding:56px 24px;
-  background:
-    radial-gradient(circle at 50% 10%,rgba(94,76,29,.11),transparent 36%),
-    linear-gradient(145deg,#0b140e,#050806);
-}
-.info-inner{
-  width:min(780px,100%);
-  text-align:center;
-  opacity:0;
-  transform:translateY(12px);
-}
-.info.show .info-inner{animation:infoIn .8s ease forwards}
-.rule{width:44px;height:1px;margin:0 auto 34px;background:linear-gradient(90deg,transparent,#cba84d,transparent)}
-.info p{font-family:Georgia,"Times New Roman",serif;margin:0 auto 24px}
-.lead{font-size:clamp(1.28rem,2.25vw,1.68rem);line-height:1.62;color:#f1eee5}
-.copy{font-size:clamp(1rem,1.55vw,1.14rem);line-height:1.82;color:rgba(238,234,224,.68)}
-.contact{margin-top:48px;padding-top:28px;border-top:1px solid rgba(205,169,74,.18)}
-.contact span{display:block;margin-bottom:10px;font-size:.67rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(236,225,194,.45)}
-.contact a{font-family:Georgia,"Times New Roman",serif;color:#d8b75d;text-decoration:none;font-size:clamp(1.05rem,2vw,1.22rem)}
-
+/* Seamless opening screen */
 .intro{
-  position:fixed;inset:0;z-index:10;
-  display:grid;place-items:center;
-  overflow:hidden;
-}
-.half{
-  position:absolute;left:0;width:100%;height:50.05%;
-  z-index:1;
+  position:fixed;
+  inset:0;
+  z-index:10;
+  display:grid;
+  place-items:center;
   background:
-    radial-gradient(circle at 50% 50%,rgba(92,124,79,.16),transparent 40%),
-    linear-gradient(145deg,#27562f 0%,#1d4727 55%,#14371e 100%);
+    radial-gradient(circle at 50% 44%,rgba(93,126,80,.14),transparent 40%),
+    linear-gradient(145deg,#27572f 0%,#1d4827 55%,#153a20 100%);
+  cursor:pointer;
+  overflow:hidden;
+  transition:opacity .65s ease, transform .65s ease, filter .65s ease;
 }
-.half.top{top:0}
-.half.bottom{bottom:0}
+
+.intro.reveal{
+  opacity:0;
+  transform:scale(1.015);
+  filter:brightness(.8);
+  pointer-events:none;
+}
 
 .brand{
-  position:relative;z-index:4;
   width:min(86vw,760px);
   text-align:center;
   opacity:0;
@@ -82,6 +65,16 @@ body{overflow:hidden;color:#eee9dc;font-family:Helvetica,Arial,sans-serif}
     drop-shadow(0 0 10px rgba(215,170,56,.16));
 }
 
+.click-note{
+  margin-top:26px;
+  font-size:.68rem;
+  letter-spacing:.20em;
+  text-transform:uppercase;
+  color:rgba(244,231,195,.42);
+  opacity:0;
+  animation:noteIn .8s ease 1s forwards;
+}
+
 .bullet{
   position:absolute;
   z-index:7;
@@ -101,31 +94,111 @@ body{overflow:hidden;color:#eee9dc;font-family:Helvetica,Arial,sans-serif}
 }
 .bullet:after{
   content:"";
-  position:absolute;right:14px;top:50%;
-  width:15px;height:1.5px;
+  position:absolute;
+  right:14px;
+  top:50%;
+  width:15px;
+  height:1.5px;
   transform:translateY(-50%);
   background:linear-gradient(90deg,transparent,rgba(255,235,160,.9));
   filter:blur(.3px);
 }
-.intro.fire .bullet{animation:bulletPass .42s cubic-bezier(.13,.7,.22,.98) forwards}
-.intro.fire .word-stage{animation:wordHit .36s ease}
 
-.seam{
-  position:absolute;z-index:6;left:50%;top:50%;
-  width:0;height:1px;
-  transform:translate(-50%,-50%);
-  opacity:0;
-  background:linear-gradient(90deg,transparent,rgba(224,178,64,.45),#fff0b2,rgba(224,178,64,.45),transparent);
-  box-shadow:0 0 7px rgba(255,225,128,.75),0 0 18px rgba(214,164,48,.32);
+.intro.fire .bullet{
+  animation:bulletPass .42s cubic-bezier(.13,.7,.22,.98) forwards;
 }
-.intro.cut .seam{animation:seamGrow .3s ease-out forwards}
+.intro.fire .word-stage{
+  animation:wordHit .36s ease;
+}
+.intro.fire .click-note{
+  opacity:0;
+  transition:opacity .12s ease;
+}
 
-.intro.open .brand{animation:brandOut .22s ease forwards}
-.intro.open .top{animation:openTop .95s cubic-bezier(.77,0,.18,1) forwards}
-.intro.open .bottom{animation:openBottom .95s cubic-bezier(.77,0,.18,1) forwards}
+.flash{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  transform:translate(-50%,-50%) scale(.2);
+  background:#fff3c1;
+  opacity:0;
+  box-shadow:
+    0 0 8px rgba(255,244,192,.95),
+    0 0 18px rgba(242,195,78,.7),
+    0 0 32px rgba(211,160,42,.34);
+}
+.intro.fire .flash{
+  animation:flash .2s ease .18s forwards;
+}
 
-@keyframes brandIn{to{opacity:1;transform:none}}
-@keyframes brandOut{to{opacity:0;transform:scale(.99)}}
+/* Information page is hidden until click */
+.info{
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  padding:56px 24px;
+  background:
+    radial-gradient(circle at 50% 10%,rgba(94,76,29,.11),transparent 36%),
+    linear-gradient(145deg,#0b140e,#050806);
+}
+.info-inner{
+  width:min(780px,100%);
+  text-align:center;
+  opacity:0;
+  transform:translateY(14px);
+}
+.info.show .info-inner{
+  animation:infoIn .8s ease .1s forwards;
+}
+
+.rule{
+  width:44px;height:1px;
+  margin:0 auto 34px;
+  background:linear-gradient(90deg,transparent,#cba84d,transparent);
+}
+.info p{
+  font-family:Georgia,"Times New Roman",serif;
+  margin:0 auto 24px;
+}
+.lead{
+  font-size:clamp(1.28rem,2.25vw,1.68rem);
+  line-height:1.62;
+  color:#f1eee5;
+}
+.copy{
+  font-size:clamp(1rem,1.55vw,1.14rem);
+  line-height:1.82;
+  color:rgba(238,234,224,.68);
+}
+.contact{
+  margin-top:48px;
+  padding-top:28px;
+  border-top:1px solid rgba(205,169,74,.18);
+}
+.contact span{
+  display:block;
+  margin-bottom:10px;
+  font-size:.67rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:rgba(236,225,194,.45);
+}
+.contact a{
+  font-family:Georgia,"Times New Roman",serif;
+  color:#d8b75d;
+  text-decoration:none;
+  font-size:clamp(1.05rem,2vw,1.22rem);
+}
+
+@keyframes brandIn{
+  to{opacity:1;transform:none}
+}
+@keyframes noteIn{
+  to{opacity:1}
+}
 @keyframes bulletPass{
   0%{left:-7%;opacity:0}
   7%{opacity:1}
@@ -136,14 +209,14 @@ body{overflow:hidden;color:#eee9dc;font-family:Helvetica,Arial,sans-serif}
   0%,100%{filter:none}
   48%{filter:brightness(1.22) drop-shadow(0 0 12px rgba(255,222,115,.48))}
 }
-@keyframes seamGrow{
-  0%{width:0;opacity:0}
-  15%{opacity:1}
-  100%{width:110vw;opacity:1}
+@keyframes flash{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}
+  45%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.8)}
 }
-@keyframes openTop{to{transform:translateY(-103%)}}
-@keyframes openBottom{to{transform:translateY(103%)}}
-@keyframes infoIn{to{opacity:1;transform:none}}
+@keyframes infoIn{
+  to{opacity:1;transform:none}
+}
 
 @media(max-width:600px){
   .brand{width:92vw}
@@ -153,9 +226,8 @@ body{overflow:hidden;color:#eee9dc;font-family:Helvetica,Arial,sans-serif}
   .info{padding:48px 22px}
 }
 @media(prefers-reduced-motion:reduce){
-  body{overflow:auto}
-  .intro{display:none}
-  .info-inner{opacity:1;transform:none}
+  .brand,.click-note{opacity:1;transform:none;animation:none}
+  .bullet,.flash{display:none}
 }
 </style>
 </head>
@@ -180,38 +252,52 @@ body{overflow:hidden;color:#eee9dc;font-family:Helvetica,Arial,sans-serif}
   </div>
 </section>
 
-<section class="intro" id="intro">
-  <div class="half top"></div>
-  <div class="half bottom"></div>
-
+<section class="intro" id="intro" aria-label="Open Sivraakiny Industries">
   <div class="brand">
     <img class="logo" src="assets/gold-logo-only.png" alt="Sivraakiny emblem">
 
     <div class="word-stage">
       <img class="wordmark" src="assets/gold-english-lettering.png" alt="Sivraakiny Industries">
       <span class="bullet" aria-hidden="true"></span>
+      <span class="flash" aria-hidden="true"></span>
     </div>
-  </div>
 
-  <div class="seam" aria-hidden="true"></div>
+    <div class="click-note">Click to continue</div>
+  </div>
 </section>
 
 <script>
-window.addEventListener("load",()=>{
-  const intro=document.getElementById("intro");
-  const info=document.getElementById("info");
+const intro = document.getElementById("intro");
+const info = document.getElementById("info");
+let opened = false;
 
-  setTimeout(()=>intro.classList.add("fire"),1200);
-  setTimeout(()=>intro.classList.add("cut"),1620);
-  setTimeout(()=>{
-    intro.classList.add("open");
+function revealSite(){
+  if(opened) return;
+  opened = true;
+
+  intro.classList.add("fire");
+
+  setTimeout(() => {
+    intro.classList.add("reveal");
     info.classList.add("show");
-  },1880);
-  setTimeout(()=>{
+  }, 520);
+
+  setTimeout(() => {
     intro.remove();
-    document.body.style.overflow="auto";
-  },3000);
+    document.body.style.overflow = "auto";
+  }, 1250);
+}
+
+intro.addEventListener("click", revealSite);
+
+intro.addEventListener("keydown", e => {
+  if(e.key === "Enter" || e.key === " "){
+    e.preventDefault();
+    revealSite();
+  }
 });
+
+intro.setAttribute("tabindex","0");
 </script>
 
 </body>
