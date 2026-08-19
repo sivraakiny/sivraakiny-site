@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#214b28">
+<meta name="theme-color" content="#173b22">
 <title>Sivraakiny Industries</title>
 <style>
 *{box-sizing:border-box}
@@ -13,126 +13,166 @@ body{overflow:hidden;color:#eee9dc;font-family:Helvetica,Arial,sans-serif}
 .info{
   position:fixed;inset:0;
   display:grid;place-items:center;
-  padding:55px 24px;
-  background:radial-gradient(circle at 50% 12%,rgba(85,72,28,.10),transparent 38%),#07100a;
+  padding:56px 24px;
+  background:
+    radial-gradient(circle at 50% 10%,rgba(94,76,29,.11),transparent 36%),
+    linear-gradient(145deg,#0b140e,#050806);
 }
-.info-inner{width:min(760px,100%);text-align:center;opacity:0;transform:translateY(12px)}
-.info.show .info-inner{animation:showInfo .8s ease forwards}
-.info p{font-family:Georgia,"Times New Roman",serif;margin:0 auto 23px}
-.lead{font-size:clamp(1.22rem,2.1vw,1.58rem);line-height:1.62;color:#f1eee5}
-.copy{font-size:clamp(.98rem,1.45vw,1.10rem);line-height:1.8;color:rgba(239,235,225,.68)}
-.rule{width:42px;height:1px;margin:0 auto 34px;background:linear-gradient(90deg,transparent,#c8a54b,transparent)}
-.contact{margin-top:44px;padding-top:26px;border-top:1px solid rgba(200,165,75,.18)}
-.contact span{display:block;margin-bottom:10px;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(235,224,193,.45)}
-.contact a{font-family:Georgia,"Times New Roman",serif;color:#d6b65b;text-decoration:none;font-size:1.18rem}
+.info-inner{
+  width:min(780px,100%);
+  text-align:center;
+  opacity:0;
+  transform:translateY(12px);
+}
+.info.show .info-inner{animation:infoIn .8s ease forwards}
+.rule{width:44px;height:1px;margin:0 auto 34px;background:linear-gradient(90deg,transparent,#cba84d,transparent)}
+.info p{font-family:Georgia,"Times New Roman",serif;margin:0 auto 24px}
+.lead{font-size:clamp(1.28rem,2.25vw,1.68rem);line-height:1.62;color:#f1eee5}
+.copy{font-size:clamp(1rem,1.55vw,1.14rem);line-height:1.82;color:rgba(238,234,224,.68)}
+.contact{margin-top:48px;padding-top:28px;border-top:1px solid rgba(205,169,74,.18)}
+.contact span{display:block;margin-bottom:10px;font-size:.67rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(236,225,194,.45)}
+.contact a{font-family:Georgia,"Times New Roman",serif;color:#d8b75d;text-decoration:none;font-size:clamp(1.05rem,2vw,1.22rem)}
 
-/* Opening page */
-.intro{position:fixed;inset:0;z-index:10;display:grid;place-items:center;overflow:hidden}
+.intro{
+  position:fixed;inset:0;z-index:10;
+  display:grid;place-items:center;
+  overflow:hidden;
+}
 .half{
   position:absolute;left:0;width:100%;height:50.05%;
-  background:radial-gradient(circle at 50% 55%,rgba(95,126,82,.16),transparent 42%),linear-gradient(145deg,#28572f,#1c4726 58%,#15391e);
   z-index:1;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(92,124,79,.16),transparent 40%),
+    linear-gradient(145deg,#27562f 0%,#1d4727 55%,#14371e 100%);
 }
 .half.top{top:0}
 .half.bottom{bottom:0}
 
 .brand{
   position:relative;z-index:4;
-  width:min(82vw,650px);
+  width:min(86vw,760px);
   text-align:center;
   opacity:0;
-  transform:scale(.985);
-  animation:brandIn .75s ease .15s forwards;
+  transform:translateY(8px) scale(.99);
+  animation:brandIn .85s cubic-bezier(.2,.8,.2,1) .15s forwards;
 }
 
-/* Exact supplied logo, but contained — never cropped. */
 .logo{
   display:block;
-  width:min(43vw,360px);
-  max-height:52vh;
+  width:min(39vw,360px);
+  max-width:360px;
+  margin:0 auto 30px;
   object-fit:contain;
-  margin:0 auto 22px;
-  mix-blend-mode:multiply;
-  filter:brightness(1.08) contrast(1.04) drop-shadow(0 0 18px rgba(214,172,66,.12));
+  filter:drop-shadow(0 0 18px rgba(216,171,58,.14));
 }
 
-/* English name: use a clean metallic treatment at proper readable size.
-   The uploaded vector remains included in assets, but its artboard has huge whitespace. */
-.word-stage{position:relative;display:inline-block}
-.word{
-  margin:0;
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(2.5rem,6vw,5.6rem);
-  line-height:.95;
-  font-weight:500;
-  letter-spacing:-.04em;
-  background:linear-gradient(180deg,#785217 0%,#ad7c27 19%,#dfbb58 37%,#f0d47b 46%,#b17d27 60%,#d0a84a 76%,#684512 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 1px 0 rgba(0,0,0,.45)) drop-shadow(0 0 10px rgba(216,172,57,.2));
-  white-space:nowrap;
+.word-stage{
+  position:relative;
+  width:min(78vw,680px);
+  margin:0 auto;
 }
 
-/* Tiny bullet, travelling directly through the English name */
+.wordmark{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  filter:
+    drop-shadow(0 1px 0 rgba(0,0,0,.45))
+    drop-shadow(0 0 10px rgba(215,170,56,.16));
+}
+
 .bullet{
-  position:absolute;z-index:7;
-  top:51%;left:-8%;
-  width:16px;height:6px;
+  position:absolute;
+  z-index:7;
+  top:50%;
+  left:-7%;
+  width:18px;
+  height:6px;
   transform:translateY(-50%);
   opacity:0;
 }
 .bullet:before{
-  content:"";position:absolute;inset:0;
+  content:"";
+  position:absolute;inset:0;
   clip-path:polygon(0 17%,70% 17%,100% 50%,70% 83%,0 83%);
-  background:linear-gradient(90deg,#785017,#bd892b 40%,#efd06e 70%,#95641c);
-  filter:drop-shadow(0 0 4px rgba(255,224,120,.8));
+  background:linear-gradient(90deg,#7c5217,#bd892c 38%,#efd06f 70%,#98661d);
+  filter:drop-shadow(0 0 4px rgba(255,223,120,.85));
 }
 .bullet:after{
-  content:"";position:absolute;right:13px;top:50%;
-  width:12px;height:1px;transform:translateY(-50%);
-  background:linear-gradient(90deg,transparent,rgba(255,234,154,.9));
+  content:"";
+  position:absolute;right:14px;top:50%;
+  width:15px;height:1.5px;
+  transform:translateY(-50%);
+  background:linear-gradient(90deg,transparent,rgba(255,235,160,.9));
+  filter:blur(.3px);
 }
-.intro.fire .bullet{animation:bullet .42s cubic-bezier(.13,.7,.22,.98) forwards}
-.intro.fire .word{animation:hit .38s ease}
+.intro.fire .bullet{animation:bulletPass .42s cubic-bezier(.13,.7,.22,.98) forwards}
+.intro.fire .word-stage{animation:wordHit .36s ease}
 
 .seam{
   position:absolute;z-index:6;left:50%;top:50%;
-  width:0;height:1px;transform:translate(-50%,-50%);
+  width:0;height:1px;
+  transform:translate(-50%,-50%);
   opacity:0;
   background:linear-gradient(90deg,transparent,rgba(224,178,64,.45),#fff0b2,rgba(224,178,64,.45),transparent);
-  box-shadow:0 0 7px rgba(255,226,128,.75),0 0 17px rgba(215,165,48,.3);
+  box-shadow:0 0 7px rgba(255,225,128,.75),0 0 18px rgba(214,164,48,.32);
 }
-.intro.cut .seam{animation:seam .3s ease-out forwards}
+.intro.cut .seam{animation:seamGrow .3s ease-out forwards}
 
-.intro.open .brand{animation:fadeBrand .22s ease forwards}
+.intro.open .brand{animation:brandOut .22s ease forwards}
 .intro.open .top{animation:openTop .95s cubic-bezier(.77,0,.18,1) forwards}
 .intro.open .bottom{animation:openBottom .95s cubic-bezier(.77,0,.18,1) forwards}
 
 @keyframes brandIn{to{opacity:1;transform:none}}
-@keyframes bullet{0%{left:-8%;opacity:0}7%{opacity:1}92%{opacity:1}100%{left:108%;opacity:0}}
-@keyframes hit{50%{filter:brightness(1.25) drop-shadow(0 0 13px rgba(255,222,112,.55))}}
-@keyframes seam{0%{width:0;opacity:0}15%{opacity:1}100%{width:110vw;opacity:1}}
-@keyframes fadeBrand{to{opacity:0}}
+@keyframes brandOut{to{opacity:0;transform:scale(.99)}}
+@keyframes bulletPass{
+  0%{left:-7%;opacity:0}
+  7%{opacity:1}
+  92%{opacity:1}
+  100%{left:108%;opacity:0}
+}
+@keyframes wordHit{
+  0%,100%{filter:none}
+  48%{filter:brightness(1.22) drop-shadow(0 0 12px rgba(255,222,115,.48))}
+}
+@keyframes seamGrow{
+  0%{width:0;opacity:0}
+  15%{opacity:1}
+  100%{width:110vw;opacity:1}
+}
 @keyframes openTop{to{transform:translateY(-103%)}}
 @keyframes openBottom{to{transform:translateY(103%)}}
-@keyframes showInfo{to{opacity:1;transform:none}}
+@keyframes infoIn{to{opacity:1;transform:none}}
 
 @media(max-width:600px){
   .brand{width:92vw}
-  .logo{width:min(66vw,310px);margin-bottom:18px}
-  .word{font-size:clamp(2.15rem,11vw,3.8rem)}
-  .info{padding:45px 22px}
+  .logo{width:min(58vw,280px);margin-bottom:22px}
+  .word-stage{width:90vw}
+  .bullet{width:15px;height:5px}
+  .info{padding:48px 22px}
 }
 @media(prefers-reduced-motion:reduce){
-  body{overflow:auto}.intro{display:none}.info-inner{opacity:1;transform:none}
+  body{overflow:auto}
+  .intro{display:none}
+  .info-inner{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
+
 <section class="info" id="info">
   <div class="info-inner">
     <div class="rule"></div>
-    <p class="lead">Sivraakiny Industries is an Indian defence manufacturing company committed to building advanced indigenous capabilities in support of India's defence requirements.</p>
-    <p class="copy">Given the sensitive nature of defence manufacturing, information regarding our manufacturing capabilities and operations is intentionally limited on this website, in keeping with applicable Government of India security and confidentiality requirements.</p>
+
+    <p class="lead">
+      Sivraakiny Industries is an Indian defence manufacturing company committed to building advanced indigenous capabilities in support of India's defence requirements.
+    </p>
+
+    <p class="copy">
+      Given the sensitive nature of defence manufacturing, information regarding our manufacturing capabilities and operations is intentionally limited on this website, in keeping with applicable Government of India security and confidentiality requirements.
+    </p>
+
     <div class="contact">
       <span>Business &amp; collaboration enquiries</span>
       <a href="mailto:contact@sivraakiny.com">contact@sivraakiny.com</a>
@@ -143,25 +183,36 @@ body{overflow:hidden;color:#eee9dc;font-family:Helvetica,Arial,sans-serif}
 <section class="intro" id="intro">
   <div class="half top"></div>
   <div class="half bottom"></div>
+
   <div class="brand">
-    <img class="logo" src="assets/gold-logo.png" alt="Sivraakiny">
+    <img class="logo" src="assets/gold-logo-only.png" alt="Sivraakiny emblem">
+
     <div class="word-stage">
-      <h1 class="word">Sivraakiny Industries</h1>
-      <span class="bullet"></span>
+      <img class="wordmark" src="assets/gold-english-lettering.png" alt="Sivraakiny Industries">
+      <span class="bullet" aria-hidden="true"></span>
     </div>
   </div>
-  <div class="seam"></div>
+
+  <div class="seam" aria-hidden="true"></div>
 </section>
 
 <script>
 window.addEventListener("load",()=>{
   const intro=document.getElementById("intro");
   const info=document.getElementById("info");
+
   setTimeout(()=>intro.classList.add("fire"),1200);
   setTimeout(()=>intro.classList.add("cut"),1620);
-  setTimeout(()=>{intro.classList.add("open");info.classList.add("show")},1880);
-  setTimeout(()=>{intro.remove();document.body.style.overflow="auto"},3000);
+  setTimeout(()=>{
+    intro.classList.add("open");
+    info.classList.add("show");
+  },1880);
+  setTimeout(()=>{
+    intro.remove();
+    document.body.style.overflow="auto";
+  },3000);
 });
 </script>
+
 </body>
 </html>
