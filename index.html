@@ -182,8 +182,8 @@ body{
   z-index:5;
   top:50%;
   left:-8%;
-  width:13px;
-  height:4px;
+  width:17px;
+  height:6px;
   transform:translateY(-50%);
   opacity:0;
 }
@@ -221,70 +221,126 @@ body{
     0 0 16px rgba(242,196,80,.72),
     0 0 30px rgba(210,160,43,.34);
 }
-.intro.fire .bullet{animation:bulletPass .145s linear forwards}
-.intro.fire .flash{animation:impactFlash .14s ease .065s forwards}
-.intro.fire .word-stage{animation:wordHit .22s ease .055s}
+.intro.fire .bullet{animation:bulletPass .42s cubic-bezier(.13,.7,.22,.98) forwards}
+.intro.fire .flash{animation:flash .20s ease .18s forwards}
+.intro.fire .word-stage{animation:wordHit .34s ease}
 
 
-/* High-speed shot: the eye sees the streak and impact more than the projectile. */
-.shot-trail{
-  position:absolute;
-  z-index:3;
+/* One clean screen-wide shot. It passes through the wordmark and breaks at the far edge. */
+.bullet{
+  position:fixed;
+  z-index:8;
   top:50%;
-  left:-3%;
-  width:0;
-  height:1px;
+  left:-28px;
+  width:15px;
+  height:5px;
   transform:translateY(-50%);
   opacity:0;
-  background:linear-gradient(
-    90deg,
-    rgba(255,226,127,0),
-    rgba(255,221,107,.16) 35%,
-    rgba(255,239,174,.72) 82%,
-    rgba(255,248,213,.95)
-  );
-  filter:blur(.2px);
 }
-.intro.fire .shot-trail{
-  animation:shotTrail .145s linear forwards;
-}
-
-/* The residual cut is confined to the lettering itself. */
-.cut-mark{
+.bullet::before{
+  content:"";
   position:absolute;
-  z-index:4;
-  left:0;
-  top:50%;
-  width:100%;
-  height:1px;
-  transform:translateY(-50%) scaleX(0);
-  transform-origin:left center;
-  opacity:0;
-  background:linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(57,35,8,.78) 4%,
-    rgba(255,222,120,.36) 5%,
-    rgba(49,30,7,.78) 48%,
-    rgba(245,204,99,.28) 50%,
-    rgba(49,30,7,.76) 95%,
-    transparent 100%
-  );
-  box-shadow:0 0 2px rgba(236,190,75,.18);
+  inset:0;
+  clip-path:polygon(0 18%,70% 18%,100% 50%,70% 82%,0 82%);
+  background:linear-gradient(90deg,#765018,#b8832a 38%,#efd171 70%,#96641d);
+  filter:drop-shadow(0 0 3px rgba(255,223,121,.72));
 }
-.intro.fire .cut-mark{
-  animation:cutAppear .16s linear .045s forwards;
+.bullet::after{
+  content:"";
+  position:absolute;
+  right:12px;
+  top:50%;
+  width:24px;
+  height:1px;
+  transform:translateY(-50%);
+  background:linear-gradient(90deg,transparent,rgba(255,235,163,.78));
+  filter:blur(.25px);
+}
+.intro.fire .bullet{
+  animation:screenShot .24s cubic-bezier(.15,.68,.22,.98) forwards;
 }
 
-/* Small concentrated impact spark; intentionally not a large lens flare. */
-.flash{
+/* Small restrained impact at the far right of the viewport. */
+.impact{
+  position:fixed;
+  z-index:9;
+  right:4px;
+  top:50%;
+  width:10px;
+  height:10px;
+  transform:translateY(-50%);
+  opacity:0;
+  pointer-events:none;
+}
+.impact::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
   width:4px;
   height:4px;
-  left:52%;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:#fff0b5;
   box-shadow:
-    0 0 4px rgba(255,247,210,.95),
-    0 0 9px rgba(255,215,99,.72),
-    0 0 16px rgba(207,153,35,.30);
+    0 0 5px rgba(255,240,181,.95),
+    0 0 12px rgba(229,181,63,.55);
+}
+.impact i{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:5px;
+  height:1px;
+  transform-origin:0 50%;
+  background:linear-gradient(90deg,#e5bb5a,transparent);
+  opacity:0;
+}
+.impact i:nth-child(1){transform:rotate(15deg)}
+.impact i:nth-child(2){transform:rotate(-22deg)}
+.impact i:nth-child(3){transform:rotate(48deg)}
+.impact i:nth-child(4){transform:rotate(-55deg)}
+.impact i:nth-child(5){transform:rotate(82deg)}
+.impact i:nth-child(6){transform:rotate(-86deg)}
+.intro.fire .impact{
+  animation:impactPop .28s ease .20s forwards;
+}
+.intro.fire .impact i{
+  animation:fragment .30s ease-out .20s forwards;
+}
+
+/* Only a brief glint while crossing the lettering; no cut or damage remains. */
+.intro.fire .word-stage{
+  animation:wordPass .22s ease .08s;
+}
+.intro.fire .flash{
+  animation:letterFlash .13s ease .10s forwards;
+}
+
+@keyframes screenShot{
+  0%{left:-28px;opacity:0}
+  6%{opacity:1}
+  94%{opacity:1}
+  100%{left:calc(100vw + 8px);opacity:0}
+}
+@keyframes wordPass{
+  0%,100%{filter:none}
+  50%{filter:brightness(1.15) drop-shadow(0 0 9px rgba(255,220,110,.34))}
+}
+@keyframes letterFlash{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}
+  45%{opacity:.85;transform:translate(-50%,-50%) scale(.9)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}
+}
+@keyframes impactPop{
+  0%{opacity:0;transform:translateY(-50%) scale(.3)}
+  28%{opacity:1;transform:translateY(-50%) scale(1)}
+  100%{opacity:0;transform:translateY(-50%) scale(1.8)}
+}
+@keyframes fragment{
+  0%{opacity:0;width:2px}
+  30%{opacity:.9}
+  100%{opacity:0;width:14px}
 }
 
 @keyframes brandIn{to{opacity:1;transform:none}}
@@ -314,23 +370,6 @@ body{
   font-weight:300;
   letter-spacing:.08em;
   color:rgba(235,223,192,.30);
-}
-
-
-@keyframes shotTrail{
-  0%{width:0;opacity:0}
-  8%{opacity:.9}
-  100%{width:106%;opacity:0}
-}
-@keyframes cutAppear{
-  0%{transform:translateY(-50%) scaleX(0);opacity:0}
-  12%{opacity:.9}
-  100%{transform:translateY(-50%) scaleX(1);opacity:.72}
-}
-@keyframes impactFlash{
-  0%{opacity:0;transform:translate(-50%,-50%) scale(.15)}
-  30%{opacity:1;transform:translate(-50%,-50%) scale(1)}
-  100%{opacity:0;transform:translate(-50%,-50%) scale(2.2)}
 }
 
 @media(max-width:600px){
@@ -379,10 +418,11 @@ body{
 
     <div class="word-stage">
       <img class="wordmark" src="assets/gold-english-lettering.png" alt="Sivraakiny Industries">
-      <span class="shot-trail" aria-hidden="true"></span>
-      <span class="cut-mark" aria-hidden="true"></span>
       <span class="bullet" aria-hidden="true"></span>
       <span class="flash" aria-hidden="true"></span>
+      <span class="impact" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+      </span>
     </div>
   </div>
 </section>
@@ -398,16 +438,16 @@ function openSite(){
 
   intro.classList.add("fire");
 
-  // The shot is nearly instantaneous. Hold the resulting precision cut briefly.
+  // Shot crosses the entire viewport, passes through the lettering, and breaks at the far edge.
   setTimeout(() => {
     intro.classList.add("opening");
     info.classList.add("show");
-  }, 700);
+  }, 760);
 
   setTimeout(() => {
     intro.remove();
     document.body.style.overflow = "auto";
-  }, 1600);
+  }, 1650);
 }
 
 intro.addEventListener("click", openSite);
