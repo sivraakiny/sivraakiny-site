@@ -397,6 +397,102 @@ body{
   }
 }
 
+
+/* Refined ballistic light: a tight hot core attached to the projectile,
+   not a large decorative lens flare. */
+.bullet-glint{
+  position:absolute;
+  z-index:-1;
+  left:15px;
+  top:50%;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  opacity:0;
+  background:rgba(255,248,211,.95);
+  box-shadow:
+    0 0 3px rgba(255,250,222,.95),
+    0 0 7px rgba(255,222,126,.72),
+    0 0 13px rgba(218,164,49,.34);
+}
+.intro.fire .bullet-glint{
+  animation:travellingGlint .46s ease forwards;
+}
+
+/* Make the projectile wake briefly flare as it crosses the gold lettering. */
+.intro.fire .shot-bullet::after{
+  animation:wakePulse .46s linear forwards;
+}
+
+/* A brief specular streak across the actual wordmark at the instant of passage. */
+.word-stage::after{
+  content:"";
+  position:absolute;
+  z-index:6;
+  left:0;
+  top:50%;
+  width:100%;
+  height:2px;
+  transform:translateY(-50%) scaleX(0);
+  transform-origin:left center;
+  opacity:0;
+  pointer-events:none;
+  background:linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,225,127,.12) 18%,
+    rgba(255,248,207,.88) 50%,
+    rgba(230,184,72,.14) 82%,
+    transparent 100%
+  );
+  filter:blur(.25px);
+}
+.intro.fire .word-stage::after{
+  animation:textGlint .24s cubic-bezier(.18,.72,.22,1) .10s forwards;
+}
+
+/* Refine the right-edge shatter: hot central point + short directional sparks. */
+.edge-impact::before{
+  width:5px !important;
+  height:5px !important;
+  background:#fff5cf !important;
+  box-shadow:
+    0 0 3px rgba(255,252,231,1),
+    0 0 8px rgba(255,221,116,.86),
+    0 0 17px rgba(218,165,48,.46) !important;
+}
+.edge-impact i{
+  height:1px !important;
+  background:linear-gradient(
+    90deg,
+    rgba(255,241,185,.95),
+    rgba(220,169,51,.48) 45%,
+    transparent
+  ) !important;
+}
+
+@keyframes travellingGlint{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}
+  8%{opacity:.55}
+  42%{opacity:.85;transform:translate(-50%,-50%) scale(.8)}
+  58%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  92%{opacity:.6}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(.5)}
+}
+@keyframes wakePulse{
+  0%,100%{opacity:.55;width:34px}
+  42%{opacity:.72;width:38px}
+  58%{opacity:.95;width:44px}
+  72%{opacity:.68;width:36px}
+}
+@keyframes textGlint{
+  0%{transform:translateY(-50%) scaleX(0);opacity:0}
+  12%{opacity:.65}
+  65%{transform:translateY(-50%) scaleX(1);opacity:.82}
+  100%{transform:translateY(-50%) scaleX(1);opacity:0}
+}
+
 @keyframes brandIn{to{opacity:1;transform:none}}
 @keyframes infoIn{to{opacity:1;transform:none}}
 @keyframes breathe{from{transform:scale(1)}to{transform:scale(1.035)}}
@@ -476,7 +572,9 @@ body{
     </div>
   </div>
 
-  <div class="shot-bullet" aria-hidden="true"></div>
+  <div class="shot-bullet" aria-hidden="true">
+    <span class="bullet-glint"></span>
+  </div>
 
   <div class="edge-impact" aria-hidden="true">
     <i></i><i></i><i></i><i></i><i></i><i></i>
