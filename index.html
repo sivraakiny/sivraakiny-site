@@ -53,7 +53,7 @@ body{
   width:58px;
   height:58px;
   object-fit:contain;
-  margin:0 auto 22px;
+  margin:0 auto 18px;
   opacity:.74;
   filter:drop-shadow(0 0 10px rgba(211,170,64,.10));
 }
@@ -64,6 +64,14 @@ body{
   letter-spacing:.22em;
   text-transform:uppercase;
   color:rgba(205,171,82,.64);
+}
+.info-wordmark{
+  display:block;
+  width:min(430px,72vw);
+  height:auto;
+  margin:0 auto 28px;
+  object-fit:contain;
+  filter:drop-shadow(0 0 8px rgba(210,170,68,.08));
 }
 .rule{
   width:42px;
@@ -529,6 +537,7 @@ body{
   .bullet{width:14px;height:5px}
   .info{padding:56px 22px}
   .info-logo{width:52px;height:52px}
+  .info-wordmark{width:min(360px,82vw);margin-bottom:24px}
 }
 @media(prefers-reduced-motion:reduce){
   .intro::before,.brand,.info.show .info-inner{animation:none}
@@ -543,11 +552,11 @@ body{
 <section class="info" id="info">
   <div class="info-inner">
     <img class="info-logo" src="assets/gold-logo-only.png" alt="Sivraakiny emblem">
-    <p class="eyebrow">Sivraakiny Industries</p>
+    <img class="info-wordmark" src="assets/gold-english-lettering.png" alt="Sivraakiny Industries">
     <div class="rule"></div>
 
     <p class="lead">
-      Sivraakiny Industries is an Indian defence manufacturing company committed to building advanced indigenous capabilities in support of India's defence requirements.
+      an Indian defence manufacturing company committed to building advanced indigenous capabilities in support of India's defence requirements.
     </p>
 
     <p class="copy">
